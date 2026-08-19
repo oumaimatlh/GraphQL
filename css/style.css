@@ -1,95 +1,215 @@
-html,
-body {
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Syne:wght@700;800&display=swap');
+
+* {
+    box-sizing: border-box;
     margin: 0;
-    width: 100%;
-    height: 100%;
-
-    background-image: url("../assets/_ (2).jpeg");
-    background-repeat: no-repeat;
-    background-size: cover;
-
-    overflow: hidden;
+    padding: 0;
 }
 
-.graphql-title {
+html, body {
+    width: 100%;
+    height: 100%;
+    background: #0a0a0f;
+    background-image: 
+        radial-gradient(ellipse at 20% 50%, rgba(225, 0, 152, 0.15) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 20%, rgba(57, 6, 124, 0.2) 0%, transparent 50%),
+        linear-gradient(160deg, #0a0a0f 0%, #12001f 50%, #0a0a0f 100%);
+    overflow: hidden;
+    font-family: 'Syne', sans-serif;
+
+}
+
+/* Arrière-plan décoratif luminescent */
+.background-glow {
     position: absolute;
+    width: 500px;
+    height: 500px;
+    top: 20%;
+    left: 5%;
+    background: linear-gradient(135deg, #7928ca, #ff0080);
+    filter: blur(140px);
+    opacity: 0.25;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 1;
+}
 
-    top: 100px;
-    left: 4vw;
+/* Layout Principal */
+.container {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    z-index: 2;
+}
 
+main {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 6vw;
+}
+
+/* Section Gauche : Content & Form */
+.left-content {
+    display: flex;
+    flex-direction: column;
+    gap: 45px;
+    width: 100%;
+    max-width: 600px;
     z-index: 5;
 }
 
+/* Titre */
 .graphql-title h1 {
-    margin: 0;
-
     font-family: 'Syne', sans-serif;
-    font-size: clamp(60px, 8vw, 130px);
+    font-size: clamp(48px, 6vw, 80px);
     font-weight: 800;
-
-    letter-spacing: -3px;
-    line-height: 0.9;
-
-    /* Nouveau dégradé vibrant vibrant (GraphQL Magenta -> Cyan -> Blanc) */
-    background: linear-gradient(
-        135deg,
-        #ffffff 10%,
-        #e10098 50%,
-        #00f2fe 100%
-    );
-
+    letter-spacing: -2px;
+    line-height: 1;
+    background: linear-gradient(135deg, #ffffff 30%, #00f2fe 70%, #4facfe 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-
-    /* Effet lumineux (Glow) */
-    filter: drop-shadow(0 0 25px rgba(225, 0, 152, 0.45));
-
-    /* Animation au chargement */
-    animation: titleAppear 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    filter: drop-shadow(0 0 30px rgba(0, 242, 254, 0.25));
+    animation: fadeIn 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-/* Keyframes de l'animation */
-@keyframes titleAppear {
-    0% {
-        opacity: 0;
-        transform: translateY(30px) scale(0.95);
-        filter: drop-shadow(0 0 0px rgba(0,0,0,0)) blur(10px);
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-        filter: drop-shadow(0 0 25px rgba(52, 225, 0, 0.45)) blur(0px);
-    }
+.graphql-title p {
+    margin-top: 10px;
+    font-size: 15px;
+    color: rgba(255, 255, 255, 0.55);
+    font-weight: 400;
 }
 
-.spline-viewer {
+/* Carte Formulaire */
+.form-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 24px;
+    padding: 40px 32px;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    animation: fadeIn 1s cubic-bezier(0.16, 1, 0.3, 1) 0.15s backwards;
+}
+
+.form-card form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Input Fields */
+.input-group {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 18px 16px 10px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 15px;
+    color: #ffffff;
+    outline: none;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.input-group label {
     position: absolute;
-
-    width: 45vw;
-    height: 80vh;
-
-    right: 5vw;
+    left: 16px;
     top: 50%;
-
     transform: translateY(-50%);
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.4);
+    pointer-events: none;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.spline-viewer spline-viewer {
-    display: block;
+.input-group input:focus,
+.input-group input:not(:placeholder-shown) {
+    border-color: rgba(0, 242, 254, 0.5);
+    background: rgba(255, 255, 255, 0.05);
+    box-shadow: 0 0 15px rgba(0, 242, 254, 0.15);
+}
 
+.input-group input:focus + label,
+.input-group input:not(:placeholder-shown) + label {
+    top: 10px;
+    transform: translateY(0);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    color: #00f2fe;
+}
+
+/* Bouton */
+.submit-btn {
+    margin-top: 10px;
+    padding: 16px;
+    background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
+    border: none;
+    border-radius: 12px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: #000000;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 20px rgba(0, 242, 254, 0.3);
+}
+
+.submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 242, 254, 0.5);
+    filter: brightness(1.1);
+}
+
+.submit-btn:active {
+    transform: translateY(0);
+}
+
+/* Section 3D Spline */
+.spline-wrapper {
+    position: relative;
+    width: 50vw;
+    height: 85vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+spline-viewer {
     width: 100%;
     height: 100%;
 }
 
+/* Masquer le logo Spline */
 .hide-spline-logo {
     position: absolute;
+    bottom: 10px;
+    right: 10px;
+    width: 180px;
+    height: 60px;
+    background: #08070b;
+    z-index: 10;
+    pointer-events: none;
+}
 
-    bottom: 0;
-    right: 0;
-
-    width: 170px;
-    height: 80px;
-
-    background: #000;
-    z-index: 5;
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
