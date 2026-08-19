@@ -1,0 +1,95 @@
+html,
+body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+
+    background-image: url("../assets/_ (2).jpeg");
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    overflow: hidden;
+}
+
+.graphql-title {
+    position: absolute;
+
+    top: 100px;
+    left: 4vw;
+
+    z-index: 5;
+}
+
+.graphql-title h1 {
+    margin: 0;
+
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(60px, 8vw, 130px);
+    font-weight: 800;
+
+    letter-spacing: -3px;
+    line-height: 0.9;
+
+    /* Nouveau dégradé vibrant vibrant (GraphQL Magenta -> Cyan -> Blanc) */
+    background: linear-gradient(
+        135deg,
+        #ffffff 10%,
+        #e10098 50%,
+        #00f2fe 100%
+    );
+
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    /* Effet lumineux (Glow) */
+    filter: drop-shadow(0 0 25px rgba(225, 0, 152, 0.45));
+
+    /* Animation au chargement */
+    animation: titleAppear 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Keyframes de l'animation */
+@keyframes titleAppear {
+    0% {
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+        filter: drop-shadow(0 0 0px rgba(0,0,0,0)) blur(10px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: drop-shadow(0 0 25px rgba(52, 225, 0, 0.45)) blur(0px);
+    }
+}
+
+.spline-viewer {
+    position: absolute;
+
+    width: 45vw;
+    height: 80vh;
+
+    right: 5vw;
+    top: 50%;
+
+    transform: translateY(-50%);
+}
+
+.spline-viewer spline-viewer {
+    display: block;
+
+    width: 100%;
+    height: 100%;
+}
+
+.hide-spline-logo {
+    position: absolute;
+
+    bottom: 0;
+    right: 0;
+
+    width: 170px;
+    height: 80px;
+
+    background: #000;
+    z-index: 5;
+}

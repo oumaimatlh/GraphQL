@@ -70,5 +70,18 @@ Front envoie :
     Schema GraphQL lié au resolver
     
 
-Test 
-/**/efaeztfgdfbgfb hdrth
+
+#### SPA 
+Single Page Application :
+    une seul Page HTML => js qui va changer le contenu 
+                index.html
+                   │
+                   ▼
+                 app.js
+                   │
+          ┌────────┼────────┐
+          ▼        ▼        ▼
+       /profile  /projects  /skills
+          │        │        │
+          ▼        ▼        ▼
+       render()  render()  render()
