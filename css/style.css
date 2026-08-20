@@ -56,7 +56,7 @@ main {
 .left-content {
     display: flex;
     flex-direction: column;
-    gap: 45px;
+    gap: 30px;
     width: 100%;
     max-width: 600px;
     z-index: 5;
@@ -64,6 +64,7 @@ main {
 
 /* Titre */
 .graphql-title h1 {
+    margin-bottom:5%;
     font-family: 'Syne', sans-serif;
     font-size: clamp(48px, 6vw, 80px);
     font-weight: 800;
@@ -88,7 +89,7 @@ main {
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 24px;
-    padding: 40px 32px;
+    padding: 45px 36px;
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
@@ -134,7 +135,7 @@ main {
 
 .input-group input:focus,
 .input-group input:not(:placeholder-shown) {
-    border-color: rgba(0, 242, 254, 0.5);
+    border-color: #4facfe;
     background: rgba(255, 255, 255, 0.05);
     box-shadow: 0 0 15px rgba(0, 242, 254, 0.15);
 }
@@ -146,7 +147,7 @@ main {
     font-size: 11px;
     font-weight: 600;
     letter-spacing: 0.5px;
-    color: #00f2fe;
+    color: #4facfe;
 }
 
 /* Bouton */
@@ -213,3 +214,4 @@ spline-viewer {
         transform: translateY(0);
     }
 }
+

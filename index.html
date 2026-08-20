@@ -11,36 +11,13 @@
     <div class="background-glow"></div>
 
     <div class="container">
-        <main>
-            <div class="left-content">
-                <div class="graphql-title">
-                    <h1>GraphQL</h1>
-                    <p>Welcome Back — Sign In To Your Workspace </p>
-                </div>
-
-                <div class="form-card">
-                    <form>
-                        <div class="input-group">
-                            <input type="text" name="identifier" id="identifier" placeholder=" " required autocomplete="off"/>
-                            <label for="identifier">Username && Email </label>
-                        </div>
-                        <div class="input-group">
-                            <input type="password" name="password" id="password" placeholder=" " required/>
-                            <label for="password">Password </label>
-                        </div>
-                        <button type="submit" class="submit-btn">Se connecter</button>
-                    </form>
-                </div>
-            </div>
-
-            <div class="spline-wrapper">
-                <script type="module" src="https://unpkg.com/@splinetool/viewer@1.12.98/build/spline-viewer.js"></script>
-                <spline-viewer url="https://prod.spline.design/ooMQsUJXH5-lG0e1/scene.splinecode"></spline-viewer>
-                <div class="hide-spline-logo"></div>
-            </div>
-        </main>
+        <main id="content"></main>
     </div>
 
+    <script type="module"
+        src="https://unpkg.com/@splinetool/viewer@1.12.98/build/spline-viewer.js">
+    </script>
     <script type="module" src="./js/app.js"></script>
+
 </body>
 </html>

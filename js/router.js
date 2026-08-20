@@ -1,7 +1,12 @@
-export function router() {
-    const path = window.location.pathname;
+import { Home } from "./components/home.js";
+import { LoginHome } from "./components/login.js";
 
-    if (path === "/") {
-        console.log("Home Login");
+export function router(path) {
+
+    if (path === "/" || path==="/index.html") {
+        LoginHome();
+    }else if (path === "/home") {
+        history.pushState({}, "", "/home"); //=> Recurperation d username ds path "otalhaou"
+        Home()
     }
 }
