@@ -1,3 +1,5 @@
+import { state } from "../state";
+
 var API = "https://learn.zone01oujda.ma/api/auth/signin"
 
 export async function Authentification(identifier, password){
@@ -20,3 +22,22 @@ export async function Authentification(identifier, password){
 };
 
 
+export async function User(...attrbs){
+    let query = `
+        query {
+           User {
+                
+           }
+        }
+    `
+    let data = await fetch(API, {
+        method: "GET",
+        headers: {
+            "Content-Type": 'application/json',
+            "Authorization" : `Bearer ${state.token}`
+        },
+        body : JSON.stringify({
+            query
+        })
+    })
+}
