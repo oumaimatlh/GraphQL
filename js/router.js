@@ -6,7 +6,6 @@ export function router(path) {
     if (path === "/" || path==="/index.html") {
         LoginHome();
     }else if (path === "/home") {
-        history.pushState({}, "", "/home"); //=> Recurperation d username ds path "otalhaou"
         Home()
     }
 }

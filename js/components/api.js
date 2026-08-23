@@ -1,18 +1,12 @@
-import { state } from "../state";
+import { state } from "../state.js";
 
-var API = "https://learn.zone01oujda.ma/api/auth/signin"
+var LOGIN = "https://learn.zone01oujda.ma/api/auth/signin";
+var API = "https://learn.zone01oujda.ma/api/graphql-engine/v1/graphql";
 
 export async function Authentification(identifier, password){
-
-    //Basic Authentication (c 'est une maniere d' envoyer un username/email + password)
-    /**
-        Authorization: Basic XXXXX 
-                Basic => les infos d 'auth sont encodées en Base64
-
-    */
     let credentials = btoa(`${identifier}:${password}`);
 
-    let response = await fetch(API, {
+    let response = await fetch(LOGIN, {
         method: "POST",
         headers: {
             "Authorization": `Basic ${credentials}`
@@ -22,16 +16,17 @@ export async function Authentification(identifier, password){
 };
 
 
-export async function User(...attrbs){
+export async function User(...args){
+
     let query = `
         query {
-           User {
-                
+           user {
+                ${args.join('\n')}
            }
         }
     `
-    let data = await fetch(API, {
-        method: "GET",
+    let res = await fetch(API, {
+        method: "POST",
         headers: {
             "Content-Type": 'application/json',
             "Authorization" : `Bearer ${state.token}`
@@ -40,4 +35,6 @@ export async function User(...attrbs){
             query
         })
     })
+    let data = await res.json()
+    return data
 }

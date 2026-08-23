@@ -215,3 +215,139 @@ spline-viewer {
     }
 }
 
+/*Dashboard*/
+.dashboard {
+    width: 100%;
+    max-width: 1600px;
+
+    height: 90vh;
+    min-height: 600px;
+
+    display: grid;
+
+    grid-template-columns: 1fr 2fr 1fr;
+
+    /*
+       Ligne 1 = header
+       Ligne 2 = contenu
+    */
+    grid-template-rows: 50px 1fr;
+
+    gap: 15px;
+
+    margin: 0 auto;
+}
+
+
+/* ==========================================
+   CARTES
+   ========================================== */
+
+.card {
+    width: 100%;
+    min-height: 80px;
+
+    background-color: rgba(255, 255, 255, 0.03);
+
+    border: 1px solid rgba(0, 210, 255, 0.2);
+
+    border-radius: 6px;
+
+    backdrop-filter: blur(10px);
+}
+
+
+/* ==========================================
+   COLONNES GAUCHE / DROITE
+   ========================================== */
+
+.side-column {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+
+    height: 100%;
+}
+
+.side-column .card {
+    flex: 1;
+}
+.header {
+    grid-column: 1 / 4;
+
+    height: 50px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 10px 20px;
+
+    background-color: rgba(255, 255, 255, 0.02);
+
+    border: 1px solid rgba(0, 210, 255, 0.2);
+
+    border-radius: 6px;
+}
+
+
+.header-profile,
+.header-title,
+.header-datetime {
+    height: 20px;
+
+    background-color: rgba(0, 210, 255, 0.1);
+
+    border-radius: 4px;
+}
+
+
+.header-profile {
+    width: 120px;
+}
+
+.header-title {
+    width: 200px;
+}
+
+.header-datetime {
+    width: 150px;
+}
+
+
+.center-column {
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+
+    justify-content: flex-end;
+}
+
+.center-main {
+    flex: 1;
+
+    min-height: 0;
+
+    background-color: rgba(255, 255, 255, 0.02);
+
+    border: 1px solid rgba(0, 210, 255, 0.2);
+
+    border-radius: 6px;
+}
+
+.center-bottom {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 15px;
+
+    height: 100px;
+
+    width: 100%;
+}
+
+.center-bottom .card {
+    height: 100%;
+}
