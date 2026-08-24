@@ -2,7 +2,7 @@ import { router } from "../router.js";
 import { state } from "../state.js";
 import { Authentification } from "./api.js";
 
-export   function LoginHome(){
+export function LoginHome(){
 
     let main = document.getElementById('content');
     main.innerHTML =  `  
@@ -72,8 +72,5 @@ export   function LoginHome(){
 
     onChangeIdentifier.addEventListener('focus', ()=>error.textContent="")
     onChangePassword.addEventListener('focus', ()=>error.textContent="")
-
-
-
 
 }

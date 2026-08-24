@@ -85,3 +85,7 @@ Single Page Application :
           │        │        │
           ▼        ▼        ▼
        render()  render()  render()
+
+
+
+#### JWT; 

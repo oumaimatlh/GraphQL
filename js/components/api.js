@@ -12,12 +12,12 @@ export async function Authentification(identifier, password){
             "Authorization": `Basic ${credentials}`
         }
     });
+    
    return response
 };
 
 
 export async function User(...args){
-
     let query = `
         query {
            user {
@@ -35,6 +35,23 @@ export async function User(...args){
             query
         })
     })
+
     let data = await res.json()
+    console.log(data)
     return data
+}
+
+const query =  ` transaction (where :{ _and: [
+        { eventId: { _eq: 41 } }
+        { type: { _eq: "level" } }
+      ]}
+  	limit : 1 
+    order_by : {amount:desc}
+  ) 
+  {
+    amount
+    
+  }`
+export function Transaction(){
+    
 }
