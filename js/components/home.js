@@ -1,16 +1,27 @@
-import { User } from "./api.js";
+import { GetData } from "./api.js";
 import { Logout } from "./logout.js";
 
 export async function Home() {
 
-    let data = await User("id", "login", "lastName", "firstName");
-    console.log(data.data.user[0].id)
-    const user = data.data.user[0];
-    history.pushState({}, "", `/${user.login}`);
+    let user = await GetData('user');
+    let level = await GetData('level');
+    let xPtotal = await GetData('XP') ;
+
     
+    user = user.data.user[0];
+    level = level.data.transaction[0].amount;
+    xPtotal = xPtotal.data.transaction_aggregate.aggregate.sum.amount;
+    xPtotal = Math.round(xPtotal / 1000); 
+
+
+    //Premiere Graph 
+
+    let data = await GetData('Graph1')
+    console.log(data)
+
     let main = document.getElementById('content');
     main.innerHTML = `
-        <div class="dashboard">
+     <div class="dashboard">
 
             <header class="header">
                 <div class="header-profile">
@@ -22,7 +33,7 @@ export async function Home() {
                 </div>
 
                 <div class="header-title">
-                    <span class="brand-badge">${user.login} </span>
+                    <span class="brand-badge">${user.login}</span>
                 </div>
 
                 <div class="header-actions">
@@ -41,8 +52,52 @@ export async function Home() {
             </header>
 
             <aside class="side-column left-column">
-                <div class="card"></div>
-                <div class="card"></div>
+                <!-- Carte Level HUD Élégante -->
+                <div class="card level-card-v2">
+                    <div class="level-card-header">
+                        <div class="level-icon-wrapper">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00f2fe" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                            </svg>
+                        </div>
+                        <span class="level-badge-tag">RANK PROGRESS</span>
+                    </div>
+
+                    <div class="level-card-content">
+                        <span class="level-sub-title">CURRENT LEVEL</span>
+                        <div class="level-display">
+                            <span class="level-number">${level}</span>
+                        </div>
+                    </div>
+
+                    <div class="level-progress-wrapper">
+                        <div class="level-progress-bar" style="width: 70%;"></div>
+                    </div>
+                </div>
+
+                <div class="card xp-card-v2">
+                    <div class="xp-card-header">
+                        <div class="xp-icon-wrapper">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ff0080" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path>
+                            </svg>
+                        </div>
+                        <span class="xp-badge-tag">Event 41</span>
+                    </div>
+
+                    <div class="xp-card-content">
+                        <span class="xp-sub-title">CUMULATIVE XP</span>
+                        <div class="xp-display">
+                            <span class="xp-number">${xPtotal}</span>
+                            <span class="xp-unit">kB</span>
+                        </div>
+                    </div>
+
+                    <div class="xp-progress-wrapper">
+                        <div class="xp-progress-bar" style="width: 85%;"></div>
+                    </div>
+                </div>
+
                 <div class="card"></div>
             </aside>
 
@@ -62,10 +117,6 @@ export async function Home() {
         </div>
     `;
 
-    Logout()
-    
+    Logout();
 }
 
-function LevelUser(){
-
-}
