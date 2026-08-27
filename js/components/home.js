@@ -16,8 +16,8 @@ export async function Home() {
 
     //Premiere Graph 
 
-    let data = await GetData('Graph1')
-    console.log(data)
+    
+    let XPAmountModule = await Graph1()
 
     let main = document.getElementById('content');
     main.innerHTML = `
@@ -102,6 +102,48 @@ export async function Home() {
             </aside>
 
             <section class="center-column">
+               <div class="center-svg-g1">
+    <svg width="100%" height="100%" viewBox="0 0 400 400">
+        <defs>
+            <linearGradient id="neonGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#00f2fe" />
+                <stop offset="100%" stop-color="#ff0080" />
+            </linearGradient>
+
+            <!-- Effet de luminescence (Glow) -->
+            <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur stdDeviation="8" result="blur" />
+                <feMerge>
+                    <feMergeNode in="blur" />
+                    <feMergeNode in="SourceGraphic" />
+                </feMerge>
+            </filter>
+        </defs>
+
+        <!-- Cercle de fond (Piste sombre) -->
+        <circle
+            cx="200"
+            cy="200"
+            r="160"
+            fill="none"
+            stroke="rgba(255, 255, 255, 0.05)"
+            stroke-width="12"
+        />
+
+        <!-- Cercle principal Néon lumineux -->
+        <circle
+            cx="200"
+            cy="200"
+            r="160"
+            fill="none"
+            stroke="url(#neonGradient)"
+            stroke-width="12"
+            stroke-linecap="round"
+            filter="url(#glow)"
+        />
+    </svg>
+</div>
+
                 <div class="center-bottom">
                     <div class="card"></div>
                     <div class="card"></div>
@@ -120,3 +162,36 @@ export async function Home() {
     Logout();
 }
 
+async function Graph1(){
+    let data = await GetData('Graph1')
+    let groupsData = new Map();
+    data.data.transaction.forEach((i)=>{
+        groupsData.set(i.object.attrs, [...groupsData.get(i.object.attrs) || [], i.amount])
+    })
+
+    for (let [mod, _] of groupsData){
+        let totalAmountModule = groupsData.get(mod).reduce((total, amount)=>{
+            return total +=amount
+        }, 0)
+        groupsData.set(mod, totalAmountModule)
+    }
+    let totalVal = 0
+
+    for (let [mod, amount] of groupsData) {
+        totalVal += amount
+    }
+
+    for (let [mod, amount] of groupsData) {
+
+        const percentage = amount / totalVal * 100
+        const angle = amount / totalVal * 360
+
+        groupsData.set(mod, {
+            amount,
+            percentage,
+            angle
+        })
+    }
+
+    return groupsData
+}

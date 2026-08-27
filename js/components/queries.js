@@ -47,9 +47,9 @@ queries.set('Graph1',
     amount
     object {
       attrs(path: "language")
-      
     }
   }
 }`
+
 )
 
