@@ -16,7 +16,6 @@ html, body {
         linear-gradient(160deg, #0a0a0f 0%, #12001f 50%, #0a0a0f 100%);
     overflow: hidden;
     font-family: 'Syne', sans-serif;
-
 }
 
 /* Arrière-plan décoratif luminescent */
@@ -215,11 +214,7 @@ spline-viewer {
     }
 }
 
-/*Dashboard*/
-
-
-
-/* Dashboard row height update */
+/* Dashboard */
 .dashboard {
     width: 100%;
     max-width: 1600px;
@@ -235,26 +230,17 @@ spline-viewer {
 .card {
     width: 100%;
     min-height: 80px;
-
     background-color: rgba(255, 255, 255, 0.03);
-
     border: 1px solid rgba(0, 210, 255, 0.2);
-
     border-radius: 6px;
-
     backdrop-filter: blur(10px);
 }
 
-
-/* ==========================================
-   COLONNES GAUCHE / DROITE
-   ========================================== */
-
+/* Colonne Gauche */
 .side-column {
     display: flex;
     flex-direction: column;
     gap: 15px;
-
     height: 100%;
 }
 
@@ -262,11 +248,7 @@ spline-viewer {
     flex: 1;
 }
 
-
-/* ==========================================
-   HEADER ÉLÉGANT & GLASSMORPHISM
-   ========================================== */
-
+/* Header */
 .header {
     grid-column: 1 / 4;
     height: 64px;
@@ -284,7 +266,6 @@ spline-viewer {
     overflow: hidden;
 }
 
-/* Ligne néon lumineuse au sommet */
 .header::before {
     content: '';
     position: absolute;
@@ -296,7 +277,6 @@ spline-viewer {
     opacity: 0.8;
 }
 
-/* Profil & Avatar */
 .header-profile {
     display: flex;
     align-items: center;
@@ -339,7 +319,6 @@ spline-viewer {
     color: #ffffff;
 }
 
-/* Centre - Name Badge Gradient */
 .header-title {
     display: flex;
     align-items: center;
@@ -359,7 +338,6 @@ spline-viewer {
     -webkit-text-fill-color: transparent;
 }
 
-/* Actions & Statut */
 .header-actions {
     display: flex;
     align-items: center;
@@ -390,7 +368,6 @@ spline-viewer {
     100% { opacity: 1; transform: scale(1); }
 }
 
-/* Bouton Logout Hover Magenta Accent */
 #logoutBtn {
     display: flex;
     align-items: center;
@@ -422,51 +399,61 @@ spline-viewer {
 #logoutBtn:hover svg {
     transform: translateX(2px);
 }
+
+/* Colonne Centrale */
 .center-column {
     height: 100%;
-
     display: flex;
     flex-direction: column;
-
-    justify-content: flex-end;
+    gap: 15px;
+    min-height: 0;
 }
 
-.center-main {
+.center-svg-g1 {
     flex: 1;
-
+    width: 100%;
+    height: 100%;
     min-height: 0;
-
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background-color: rgba(255, 255, 255, 0.02);
-
     border: 1px solid rgba(0, 210, 255, 0.2);
+    border-radius: 16px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    position: relative;
+    padding: 10px;
+}
 
-    border-radius: 6px;
+.center-svg-g1 svg {
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
 }
 
 .center-bottom {
     display: grid;
-
     grid-template-columns: 1fr 1fr;
-
     gap: 15px;
-
-    height: 100px;
-
+    height: 140px;
     width: 100%;
+    flex-shrink: 0;
 }
 
 .center-bottom .card {
     height: 100%;
 }
 
-.level-card-v2 {
+/* Cartes Stat (Level & XP) */
+.level-card-v2, .xp-card-v2 {
     position: relative;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     padding: 22px 24px;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(0, 242, 254, 0.02) 100%);
-    border: 1px solid rgba(0, 242, 254, 0.25);
     border-radius: 16px;
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
@@ -475,36 +462,27 @@ spline-viewer {
     transition: transform 0.3s ease, border-color 0.3s ease;
 }
 
+.level-card-v2 {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(0, 242, 254, 0.02) 100%);
+    border: 1px solid rgba(0, 242, 254, 0.25);
+}
+
 .level-card-v2:hover {
     border-color: rgba(0, 242, 254, 0.45);
     box-shadow: 0 12px 35px rgba(0, 242, 254, 0.15);
 }
 
-/* Halos lumineux en arrière-plan */
-.level-card-v2::before {
-    content: '';
-    position: absolute;
-    top: -40px;
-    right: -40px;
-    width: 130px;
-    height: 130px;
-    background: radial-gradient(circle, rgba(0, 242, 254, 0.18) 0%, transparent 70%);
-    pointer-events: none;
+.xp-card-v2 {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 0, 128, 0.02) 100%);
+    border: 1px solid rgba(255, 0, 128, 0.25);
 }
 
-.level-card-v2::after {
-    content: '';
-    position: absolute;
-    bottom: -30px;
-    left: -30px;
-    width: 100px;
-    height: 100px;
-    background: radial-gradient(circle, rgba(255, 0, 128, 0.12) 0%, transparent 70%);
-    pointer-events: none;
+.xp-card-v2:hover {
+    border-color: rgba(255, 0, 128, 0.45);
+    box-shadow: 0 12px 35px rgba(255, 0, 128, 0.18);
 }
 
-/* En-tête de la carte */
-.level-card-header {
+.level-card-header, .xp-card-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -522,123 +500,6 @@ spline-viewer {
     box-shadow: 0 0 12px rgba(0, 242, 254, 0.25);
 }
 
-.level-badge-tag {
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 1.5px;
-    color: rgba(255, 255, 255, 0.45);
-    text-transform: uppercase;
-}
-
-/* Contenu central */
-.level-card-content {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    margin: 14px 0;
-}
-
-.level-sub-title {
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 2px;
-    color: #00f2fe;
-    text-transform: uppercase;
-    text-shadow: 0 0 8px rgba(0, 242, 254, 0.4);
-}
-
-.level-display {
-    display: flex;
-    align-items: baseline;
-    gap: 8px;
-}
-
-.level-number {
-    font-family: 'monospace', sans-serif;
-    font-size: 3.6rem;
-    font-weight: 800;
-    line-height: 1;
-    background: linear-gradient(135deg, #ffffff 30%, #00f2fe 70%, #4facfe 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    filter: drop-shadow(0 0 16px rgba(0, 242, 254, 0.3));
-}
-
-/* Barre de progression néon */
-.level-progress-wrapper {
-    width: 100%;
-    height: 5px;
-    background: rgba(255, 255, 255, 0.06);
-    border-radius: 10px;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    overflow: hidden;
-    position: relative;
-}
-
-.level-progress-bar {
-    height: 100%;
-    background: linear-gradient(90deg, #00f2fe 0%, #ff0080 100%);
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 242, 254, 0.6);
-}
-
-/* ==========================================
-   CARTE XP HUD ÉLÉGANTE (Glassmorphism Neon Magenta)
-   ========================================== */
-
-.xp-card-v2 {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: 22px 24px;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 0, 128, 0.02) 100%);
-    border: 1px solid rgba(255, 0, 128, 0.25);
-    border-radius: 16px;
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-    transition: transform 0.3s ease, border-color 0.3s ease;
-}
-
-.xp-card-v2:hover {
-    border-color: rgba(255, 0, 128, 0.45);
-    box-shadow: 0 12px 35px rgba(255, 0, 128, 0.18);
-}
-
-/* Glows Néon Magenta en arrière-plan */
-.xp-card-v2::before {
-    content: '';
-    position: absolute;
-    top: -40px;
-    right: -40px;
-    width: 130px;
-    height: 130px;
-    background: radial-gradient(circle, rgba(255, 0, 128, 0.18) 0%, transparent 70%);
-    pointer-events: none;
-}
-
-.xp-card-v2::after {
-    content: '';
-    position: absolute;
-    bottom: -30px;
-    left: -30px;
-    width: 100px;
-    height: 100px;
-    background: radial-gradient(circle, rgba(121, 40, 202, 0.15) 0%, transparent 70%);
-    pointer-events: none;
-}
-
-/* Header */
-.xp-card-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
 .xp-icon-wrapper {
     width: 34px;
     height: 34px;
@@ -651,7 +512,7 @@ spline-viewer {
     box-shadow: 0 0 12px rgba(255, 0, 128, 0.25);
 }
 
-.xp-badge-tag {
+.level-badge-tag, .xp-badge-tag {
     font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 10px;
     font-weight: 700;
@@ -660,12 +521,20 @@ spline-viewer {
     text-transform: uppercase;
 }
 
-/* Content */
-.xp-card-content {
+.level-card-content, .xp-card-content {
     display: flex;
     flex-direction: column;
-    gap: 5px;
-    margin: 14px 0;
+    gap: 6px;
+    margin: 10px 0;
+}
+
+.level-sub-title {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    color: #00f2fe;
+    text-transform: uppercase;
 }
 
 .xp-sub-title {
@@ -675,42 +544,55 @@ spline-viewer {
     letter-spacing: 2px;
     color: #ff0080;
     text-transform: uppercase;
-    text-shadow: 0 0 8px rgba(255, 0, 128, 0.4);
 }
 
-.xp-display {
+.level-display, .xp-display {
     display: flex;
     align-items: baseline;
-    gap: 6px;
+    gap: 8px;
+}
+
+.level-number {
+    font-family: monospace, sans-serif;
+    font-size: 3rem;
+    font-weight: 800;
+    line-height: 1;
+    background: linear-gradient(135deg, #ffffff 30%, #00f2fe 70%, #4facfe 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .xp-number {
-    font-family: 'monospace', sans-serif;
-    font-size: 3.2rem;
+    font-family: monospace, sans-serif;
+    font-size: 2.8rem;
     font-weight: 800;
     line-height: 1;
     background: linear-gradient(135deg, #ffffff 30%, #ff0080 70%, #7928ca 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    filter: drop-shadow(0 0 16px rgba(255, 0, 128, 0.35));
 }
 
 .xp-unit {
     font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     font-weight: 700;
     color: rgba(255, 255, 255, 0.6);
 }
 
-/* Progress bar néon rose/violet */
-.xp-progress-wrapper {
+.level-progress-wrapper, .xp-progress-wrapper {
     width: 100%;
     height: 5px;
     background: rgba(255, 255, 255, 0.06);
     border-radius: 10px;
     border: 1px solid rgba(255, 255, 255, 0.08);
     overflow: hidden;
-    position: relative;
+}
+
+.level-progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #00f2fe 0%, #ff0080 100%);
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 242, 254, 0.6);
 }
 
 .xp-progress-bar {
@@ -718,4 +600,86 @@ spline-viewer {
     background: linear-gradient(90deg, #ff0080 0%, #7928ca 100%);
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(255, 0, 128, 0.6);
+}
+
+/* Colonne Droite (Section Skills 3D) */
+.side-column-right {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    height: 100%;
+}
+
+.side-column-right .card {
+    flex: 1;
+}
+
+.skills-card-v2 {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 22px 24px;
+    height: 100%;
+    border-radius: 16px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(168, 85, 247, 0.02) 100%);
+    border: 1px solid rgba(168, 85, 247, 0.25);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.skills-card-v2:hover {
+    border-color: rgba(168, 85, 247, 0.45);
+    box-shadow: 0 12px 35px rgba(168, 85, 247, 0.18);
+}
+
+.skills-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.skills-icon-wrapper {
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+    background: rgba(168, 85, 247, 0.08);
+    border: 1px solid rgba(168, 85, 247, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 12px rgba(168, 85, 247, 0.25);
+}
+
+.skills-badge-tag {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: rgba(255, 255, 255, 0.45);
+    text-transform: uppercase;
+}
+
+.skills-chart-container {
+    flex: 1;
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.bar-3d-group {
+    cursor: pointer;
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), filter 0.25s ease;
+}
+
+.bar-3d-group:hover {
+    transform: translateY(-4px);
+    filter: drop-shadow(0 0 10px rgba(168, 85, 247, 0.5));
 }

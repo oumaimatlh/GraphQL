@@ -47,9 +47,24 @@ queries.set('Graph1',
     amount
     object {
       attrs(path: "language")
+      name
     }
   }
 }`
 
 )
 
+queries.set("Graph2", `
+ query {
+  transaction(
+    where: {
+      eventId: {_eq: 41}
+      type: { _like: "skill_%" }
+    }
+  ) {
+    type
+    amount
+  }
+}
+  
+`)
