@@ -54,17 +54,16 @@ queries.set('Graph1',
 
 )
 
-queries.set("Graph2", `
- query {
-  transaction(
-    where: {
-      eventId: {_eq: 41}
-      type: { _like: "skill_%" }
+queries.set("audit", `
+ query AuditQuery {
+  transaction(where: { type: { _in: ["up", "down"] } }) {
+    user {
+      auditRatio
     }
-  ) {
     type
+    object {
+      name
+    }
     amount
   }
-}
-  
-`)
+}`)

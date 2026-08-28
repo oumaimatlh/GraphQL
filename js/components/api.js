@@ -13,7 +13,6 @@ export async function Authentification(identifier, password){
             "Authorization": `Basic ${credentials}`
         }
     });
-    
    return response
 };
 

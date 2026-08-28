@@ -11,11 +11,10 @@ html, body {
     height: 100%;
     background: #0a0a0f;
     background-image: 
-        radial-gradient(ellipse at 20% 50%, rgba(225, 0, 152, 0.15) 0%, transparent 50%),
-        radial-gradient(ellipse at 80% 20%, rgba(57, 6, 124, 0.2) 0%, transparent 50%),
-        linear-gradient(160deg, #0a0a0f 0%, #12001f 50%, #0a0a0f 100%);
+        radial-gradient(ellipse at 20% 50%, rgba(0, 165, 225, 0.15) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 20%, rgba(6, 45, 124, 0.2) 0%, transparent 50%),
+        linear-gradient(160deg, #0a0a0f 0%, #00051f 50%, #0a0a0f 100%);
     overflow: hidden;
-    font-family: 'Syne', sans-serif;
 }
 
 /* Arrière-plan décoratif luminescent */
@@ -602,7 +601,7 @@ spline-viewer {
     box-shadow: 0 0 10px rgba(255, 0, 128, 0.6);
 }
 
-/* Colonne Droite (Section Skills 3D) */
+
 .side-column-right {
     display: flex;
     flex-direction: column;
@@ -614,7 +613,7 @@ spline-viewer {
     flex: 1;
 }
 
-.skills-card-v2 {
+.audit-card-v2 {
     position: relative;
     display: flex;
     flex-direction: column;
@@ -622,8 +621,8 @@ spline-viewer {
     padding: 22px 24px;
     height: 100%;
     border-radius: 16px;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(168, 85, 247, 0.02) 100%);
-    border: 1px solid rgba(168, 85, 247, 0.25);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(56, 239, 125, 0.02) 100%);
+    border: 1px solid rgba(56, 239, 125, 0.25);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     overflow: hidden;
@@ -631,32 +630,32 @@ spline-viewer {
     transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.skills-card-v2:hover {
-    border-color: rgba(168, 85, 247, 0.45);
-    box-shadow: 0 12px 35px rgba(168, 85, 247, 0.18);
+.audit-card-v2:hover {
+    border-color: rgba(56, 239, 125, 0.45);
+    box-shadow: 0 12px 35px rgba(56, 239, 125, 0.18);
 }
 
-.skills-card-header {
+.audit-card-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin-bottom: 12px;
 }
 
-.skills-icon-wrapper {
+.audit-icon-wrapper {
     width: 34px;
     height: 34px;
     border-radius: 10px;
-    background: rgba(168, 85, 247, 0.08);
-    border: 1px solid rgba(168, 85, 247, 0.3);
+    background: rgba(56, 239, 125, 0.08);
+    border: 1px solid rgba(56, 239, 125, 0.3);
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 0 12px rgba(168, 85, 247, 0.25);
+    box-shadow: 0 0 12px rgba(56, 239, 125, 0.25);
 }
 
-.skills-badge-tag {
-    font-family: 'Plus Jakarta Sans', sans-serif;
+.audit-badge-tag {
+    font-family: 'monospace', sans-serif;
     font-size: 10px;
     font-weight: 700;
     letter-spacing: 1.5px;
@@ -664,7 +663,7 @@ spline-viewer {
     text-transform: uppercase;
 }
 
-.skills-chart-container {
+.audit-chart-container {
     flex: 1;
     width: 100%;
     height: 100%;
@@ -672,14 +671,4 @@ spline-viewer {
     display: flex;
     align-items: center;
     justify-content: center;
-}
-
-.bar-3d-group {
-    cursor: pointer;
-    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), filter 0.25s ease;
-}
-
-.bar-3d-group:hover {
-    transform: translateY(-4px);
-    filter: drop-shadow(0 0 10px rgba(168, 85, 247, 0.5));
 }
