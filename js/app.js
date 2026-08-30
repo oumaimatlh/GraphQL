@@ -1,7 +1,7 @@
 import { router } from "./router.js";
 
 function app(){
-    router('/')
+    let path = window.location.pathname
+    router(path)
 }
-
 app();

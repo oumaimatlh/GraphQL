@@ -7,6 +7,13 @@ queries.set('user', `
                 login
                 firstName
                 lastName
+                events {
+                    cohorts{
+                      labelName
+                    
+                  }
+                
+                }
            }
         }
     `);

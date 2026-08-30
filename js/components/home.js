@@ -14,6 +14,9 @@ export async function Home() {
     const level = levelRaw?.data?.transaction?.[0]?.amount || 0;
     const rawXP = xpRaw?.data?.transaction_aggregate?.aggregate?.sum?.amount || 0;
     const xPtotal = Math.round(rawXP / 1000);
+    
+    console.log(user)
+    const cohort = user?.events?.[0]?.cohorts?.[0]?.labelName || "No Cohort";
 
     const chartComponents = generateSvgChart(xpAmountModule);
     const auditSvg = generateAuditSvg(auditData);
@@ -31,8 +34,33 @@ export async function Home() {
                 <span class="user-name">${user.firstName} ${user.lastName}</span>
             </div>
         </div>
-        <div class="header-title">
+        <div class="header-title" style="display: flex; align-items: center; gap: 10px;">
             <span class="brand-badge">${user.login}</span>
+            
+            <!-- Zone Cohort Stylisée -->
+            <div class="cohort-badge" style="
+                display: inline-flex; 
+                align-items: center; 
+                gap: 6px; 
+                padding: 4px 12px; 
+                background: rgba(168, 85, 247, 0.12); 
+                border: 1px solid rgba(168, 85, 247, 0.35); 
+                border-radius: 20px; 
+                font-family: 'Plus Jakarta Sans', sans-serif; 
+                font-size: 11px; 
+                font-weight: 700; 
+                color: #a855f7; 
+                letter-spacing: 0.5px; 
+                box-shadow: 0 0 12px rgba(168, 85, 247, 0.2);
+                backdrop-filter: blur(4px);">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="9" cy="7" r="4"></circle>
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                </svg>
+                <span>${cohort}</span>
+            </div>
         </div>
         <div class="header-actions">
             <div class="status-indicator"><span class="dot"></span> Online</div>
@@ -73,7 +101,7 @@ export async function Home() {
                         <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path>
                     </svg>
                 </div>
-                <span class="xp-badge-tag">Event 41</span>
+                <span class="xp-badge-tag">${cohort}</span>
             </div>
             <div class="xp-card-content">
                 <span class="xp-sub-title">CUMULATIVE XP</span>
@@ -218,10 +246,12 @@ function generateAuditSvg(audit) {
 function generateSvgChart(groupsData) {
     const cx = 270, cy = 270, radius = 135, circumference = 2 * Math.PI * radius;
     const outerRadius = 170, outerCircumference = 2 * Math.PI * outerRadius;
-    const colors = ['#00f2fe', '#ff0080', '#a855f7', '#38ef7d', '#ffb703', '#3b82f6'];
+    const colors = ['#00f2fe', '#ff0080', '#a855f7', '#38ef7d', '#ffb703', '#3b82f6', '#ec4899', '#10b981'];
 
     let currentAngle = -90, colorIndex = 0;
     let mainSegmentsHtml = '', outerArcsHtml = '', innerLabelsHtml = '', calloutsHtml = '';
+
+    const calloutList = [];
 
     groupsData.forEach((data, moduleName) => {
         const name = (!moduleName || moduleName === "undefined" || !moduleName.trim()) ? "others" : moduleName;
@@ -229,7 +259,8 @@ function generateSvgChart(groupsData) {
 
         const color = colors[colorIndex % colors.length];
         const angle = data.angle;
-        const rad = ((currentAngle + angle / 2) * Math.PI) / 180;
+        const midAngle = currentAngle + angle / 2;
+        const rad = (midAngle * Math.PI) / 180;
         const gap = groupsData.size > 1 ? 6 : 0;
         const dashLength = Math.max(0, (data.percentage / 100) * circumference - gap);
         const outerDash = Math.max(0, (data.percentage / 100) * outerCircumference - 10);
@@ -241,23 +272,69 @@ function generateSvgChart(groupsData) {
             innerLabelsHtml += `<text x="${cx + radius * Math.cos(rad)}" y="${cy + radius * Math.sin(rad)}" fill="#ffffff" font-size="11" font-weight="800" font-family="'Syne', sans-serif" text-anchor="middle" dominant-baseline="central" style="pointer-events: none; text-shadow: 0 2px 4px rgba(0,0,0,0.9);">${Math.round(data.percentage)}%</text>`;
         }
 
-        const p0X = cx + (radius + 16) * Math.cos(rad), p0Y = cy + (radius + 16) * Math.sin(rad);
-        const p1X = cx + (outerRadius + 8) * Math.cos(rad), p1Y = cy + (outerRadius + 8) * Math.sin(rad);
+        const p0X = cx + (radius + 16) * Math.cos(rad);
+        const p0Y = cy + (radius + 16) * Math.sin(rad);
+        const p1X = cx + (outerRadius + 8) * Math.cos(rad);
+        const p1Y = cy + (outerRadius + 8) * Math.sin(rad);
         const isRight = p1X >= cx;
-        const p2X = p1X + (isRight ? 20 : -20), p2Y = p1Y;
-        const badgeX = p2X + (isRight ? 6 : -6);
 
-        calloutsHtml += `
-        <g class="chart-callout">
-            <circle cx="${p0X}" cy="${p0Y}" r="2" fill="${color}" filter="url(#glowNeon)"/>
-            <path d="M ${p0X} ${p0Y} L ${p1X} ${p1Y} L ${p2X} ${p2Y}" fill="none" stroke="${color}" stroke-width="1.2" opacity="0.75"/>
-            <circle cx="${p2X}" cy="${p2Y}" r="2.5" fill="${color}" />
-            <text x="${badgeX}" y="${p2Y - 4}" fill="#ffffff" font-size="11" font-weight="700" font-family="'Syne', sans-serif" text-anchor="${isRight ? 'start' : 'end'}">${name}</text>
-            <text x="${badgeX}" y="${p2Y + 10}" fill="${color}" font-size="10" font-weight="600" font-family="'Plus Jakarta Sans', sans-serif" text-anchor="${isRight ? 'start' : 'end'}">${Math.round(data.amount / 1000)} kB (${Math.round(data.percentage)}%)</text>
-        </g>`;
+        calloutList.push({
+            name,
+            amount: data.amount,
+            percentage: data.percentage,
+            color,
+            p0X,
+            p0Y,
+            p1X,
+            p1Y,
+            adjustedY: p1Y,
+            isRight
+        });
 
         currentAngle += angle;
         colorIndex++;
+    });
+
+    const resolveOverlaps = (items) => {
+        items.sort((a, b) => a.p1Y - b.p1Y);
+        const minGap = 28;
+        const minY = 30, maxY = 510;
+
+        for (let i = 1; i < items.length; i++) {
+            if (items[i].adjustedY < items[i - 1].adjustedY + minGap) {
+                items[i].adjustedY = items[i - 1].adjustedY + minGap;
+            }
+        }
+
+        if (items.length > 0 && items[items.length - 1].adjustedY > maxY) {
+            items[items.length - 1].adjustedY = maxY;
+            for (let i = items.length - 2; i >= 0; i--) {
+                if (items[i].adjustedY > items[i + 1].adjustedY - minGap) {
+                    items[i].adjustedY = items[i + 1].adjustedY - minGap;
+                }
+            }
+        }
+    };
+
+    const rightCallouts = calloutList.filter(c => c.isRight);
+    const leftCallouts = calloutList.filter(c => !c.isRight);
+
+    resolveOverlaps(rightCallouts);
+    resolveOverlaps(leftCallouts);
+
+    calloutList.forEach(c => {
+        const p2X = c.p1X + (c.isRight ? 20 : -20);
+        const p2Y = c.adjustedY;
+        const badgeX = p2X + (c.isRight ? 6 : -6);
+
+        calloutsHtml += `
+        <g class="chart-callout">
+            <circle cx="${c.p0X}" cy="${c.p0Y}" r="2" fill="${c.color}" filter="url(#glowNeon)"/>
+            <path d="M ${c.p0X} ${c.p0Y} L ${c.p1X} ${p2Y} L ${p2X} ${p2Y}" fill="none" stroke="${c.color}" stroke-width="1.2" opacity="0.75"/>
+            <circle cx="${p2X}" cy="${p2Y}" r="2.5" fill="${c.color}" />
+            <text x="${badgeX}" y="${p2Y - 4}" fill="#ffffff" font-size="11" font-weight="700" font-family="'Syne', sans-serif" text-anchor="${c.isRight ? 'start' : 'end'}">${c.name}</text>
+            <text x="${badgeX}" y="${p2Y + 10}" fill="${c.color}" font-size="10" font-weight="600" font-family="'Plus Jakarta Sans', sans-serif" text-anchor="${c.isRight ? 'start' : 'end'}">${Math.round(c.amount / 1000)} kB (${Math.round(c.percentage)}%)</text>
+        </g>`;
     });
 
     return { mainSegmentsHtml, outerArcsHtml, innerLabelsHtml, calloutsHtml };
