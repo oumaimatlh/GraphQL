@@ -104,7 +104,7 @@ export function generateSvgChart(groupsData) {
         const badgeX = p2X + (c.isRight ? 6 : -6);
 
         calloutsHtml += `
-        <g class="chart-callout">
+        <g>
             <circle cx="${c.p0X}" cy="${c.p0Y}" r="2" fill="${c.color}" filter="url(#glowNeon)"/>
             <path d="M ${c.p0X} ${c.p0Y} L ${c.p1X} ${p2Y} L ${p2X} ${p2Y}" fill="none" stroke="${c.color}" stroke-width="1.2" opacity="0.75"/>
             <circle cx="${p2X}" cy="${p2Y}" r="2.5" fill="${c.color}" />

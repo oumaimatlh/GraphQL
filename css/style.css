@@ -14,7 +14,8 @@ html, body {
         radial-gradient(ellipse at 20% 50%, rgba(0, 165, 225, 0.15) 0%, transparent 50%),
         radial-gradient(ellipse at 80% 20%, rgba(6, 45, 124, 0.2) 0%, transparent 50%),
         linear-gradient(160deg, #0a0a0f 0%, #00051f 50%, #0a0a0f 100%);
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
 /* Arrière-plan décoratif luminescent */
@@ -35,8 +36,8 @@ html, body {
 /* Layout Principal */
 .container {
     display: flex;
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    min-height: 100vh;
     position: relative;
     z-index: 2;
 }
@@ -44,7 +45,7 @@ html, body {
 main {
     display: flex;
     width: 100%;
-    height: 100%;
+    min-height: 100vh;
     align-items: center;
     justify-content: space-between;
     padding: 0 6vw;
@@ -318,11 +319,6 @@ spline-viewer {
     color: #ffffff;
 }
 
-.header-title {
-    display: flex;
-    align-items: center;
-}
-
 .brand-badge {
     padding: 6px 18px;
     border-radius: 20px;
@@ -431,19 +427,6 @@ spline-viewer {
     max-width: 100%;
     max-height: 100%;
     display: block;
-}
-
-.center-bottom {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 15px;
-    height: 140px;
-    width: 100%;
-    flex-shrink: 0;
-}
-
-.center-bottom .card {
-    height: 100%;
 }
 
 /* Cartes Stat (Level & XP) */
@@ -671,4 +654,184 @@ spline-viewer {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+@media (max-width: 1200px) {
+    main {
+        padding: 32px 4vw;
+    }
+
+    .dashboard {
+        width: 100%;
+        grid-template-columns: minmax(190px, 1fr) minmax(320px, 1.7fr) minmax(190px, 1fr);
+    }
+
+    .header {
+        padding: 0 16px;
+    }
+
+    .header-actions {
+        gap: 12px;
+    }
+
+    .level-card-v2,
+    .xp-card-v2,
+    .audit-card-v2 {
+        padding: 18px;
+    }
+}
+
+@media (max-width: 900px) {
+    main {
+        flex-direction: column;
+        justify-content: center;
+        gap: 32px;
+        padding: 32px 24px;
+    }
+
+    .left-content,
+    .spline-wrapper {
+        max-width: 600px;
+        width: 100%;
+    }
+
+    .spline-wrapper {
+        height: min(42vh, 360px);
+    }
+
+    .dashboard {
+        height: auto;
+        min-height: 0;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto;
+    }
+
+    .header {
+        grid-column: 1 / -1;
+    }
+
+    .center-column {
+        min-height: 420px;
+    }
+
+    .side-column,
+    .side-column-right {
+        height: auto;
+    }
+
+    .side-column .card,
+    .side-column-right .card {
+        flex: none;
+        min-height: 220px;
+    }
+
+    .audit-card-v2 {
+        min-height: 420px;
+    }
+}
+
+@media (max-width: 620px) {
+    main {
+        align-items: stretch;
+        padding: 24px 16px;
+    }
+
+    .graphql-title h1 {
+        font-size: clamp(42px, 14vw, 64px);
+    }
+
+    .form-card {
+        padding: 28px 20px;
+    }
+
+    .spline-wrapper {
+        height: 280px;
+    }
+
+    .dashboard {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .header {
+        grid-column: auto;
+        height: auto;
+        min-height: 64px;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 14px;
+        padding: 14px;
+    }
+
+    .header > div:nth-child(2) {
+        grid-column: 1 / -1;
+        grid-row: 2;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .header-actions {
+        justify-content: flex-end;
+    }
+
+    .status-indicator {
+        display: none;
+    }
+
+    .side-column,
+    .side-column-right,
+    .center-column {
+        min-height: 0;
+    }
+
+    .center-column {
+        min-height: 340px;
+    }
+
+    .audit-card-v2 {
+        min-height: 340px;
+    }
+
+    .level-card-v2,
+    .xp-card-v2,
+    .audit-card-v2 {
+        padding: 18px;
+    }
+
+    .level-number {
+        font-size: 2.5rem;
+    }
+
+    .xp-number {
+        font-size: 2.3rem;
+    }
+}
+
+@media (max-width: 380px) {
+    .header-profile {
+        min-width: 0;
+    }
+
+    .user-name,
+    .brand-badge {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    #logoutBtn {
+        padding: 8px 10px;
+    }
+
+    #logoutBtn span {
+        display: none;
+    }
+
+    .center-column {
+        min-height: 280px;
+    }
+
+    .audit-card-v2 {
+        min-height: 300px;
+    }
 }

@@ -40,7 +40,7 @@ export function generateAuditSvg(audit) {
         const x = startX + index * (barWidth + gap);
 
         return `
-            <g class="bar-3d-group">
+            <g>
                 <ellipse cx="${x + barWidth / 2 + dx / 2}" cy="${y0 + 2}" rx="${barWidth / 1.3}" ry="6" fill="${bar.glow}" opacity="0.25" filter="blur(6px)" />
                 <path d="M ${x} ${y0 - h} L ${x + barWidth} ${y0 - h} L ${x + barWidth + dx} ${y0 - h - dy} L ${x + dx} ${y0 - h - dy} Z" fill="${bar.top}" opacity="0.9" />
                 <path d="M ${x + barWidth} ${y0} L ${x + barWidth + dx} ${y0 - dy} L ${x + barWidth + dx} ${y0 - h - dy} L ${x + barWidth} ${y0 - h} Z" fill="${bar.side}" opacity="0.95" />

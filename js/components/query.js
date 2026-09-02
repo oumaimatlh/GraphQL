@@ -26,7 +26,7 @@ export const query = `
             }
           }
 
-      Graph1 :  
+      xpModule :  
           transaction(where: { eventId: { _eq: 41 } type: { _eq: "xp" } object: {  type: { _eq: "project" } }}) 
           {
             amount

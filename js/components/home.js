@@ -1,5 +1,4 @@
 import { router } from "../router.js";
-import { GetData } from "./api.js";
 import { generateAuditSvg, processAuditData } from "./graphAudit.js";
 import { generateSvgChart, processGraph1Data } from "./graphXPModule.js";
 import { Logout } from "./logout.js";
@@ -19,7 +18,7 @@ export async function Home(rawData) {
     const xPtotal = Math.round((data.XP?.aggregate?.sum?.amount || 0 )/ 1000);
     const cohort = user?.events?.[0]?.cohorts?.[0]?.labelName || "No Cohort";
 
-    const xpAmountModule = processGraph1Data(data.Graph1 || []);
+    const xpAmountModule = processGraph1Data(data.xpModule || []);
     const chartComponents = generateSvgChart(xpAmountModule);
 
     const auditData = processAuditData(data.audit || []);
@@ -36,10 +35,10 @@ export async function Home(rawData) {
                 <span class="user-name">${user.firstName} ${user.lastName}</span>
             </div>
         </div>
-        <div class="header-title" style="display: flex; align-items: center; gap: 10px;">
+        <div style="display: flex; align-items: center; gap: 10px;">
             <span class="brand-badge">${user.login}</span>
             
-            <div class="cohort-badge" style="
+            <div style="
                 display: inline-flex; 
                 align-items: center; 
                 gap: 6px; 
