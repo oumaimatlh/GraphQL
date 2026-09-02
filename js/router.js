@@ -1,11 +1,15 @@
+import { GetData } from "./components/api.js";
 import { Home } from "./components/home.js";
 import { LoginHome } from "./components/login.js";
 
-export function router(path) {
+export async function router(path) {
 
-    if (path === "/" || path==="/index.html") {
+    if (path == "/home") {
+        const data = await GetData()
+        Home(data)
+    }else {
         LoginHome();
-    }else if (path === "/home") {
-        Home()
     }
+
+   
 }

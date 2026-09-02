@@ -1,9 +1,11 @@
 import { router } from "../router.js";
-import { state } from "../state.js";
 import { Authentification } from "./api.js";
 
-export function LoginHome(){
-
+export async function LoginHome(){
+    if (localStorage.getItem('token')) {
+        router('/home')
+        return 
+    }
     let main = document.getElementById('content');
     main.innerHTML =  `  
             <div class="left-content">
@@ -62,8 +64,7 @@ export function LoginHome(){
         }
         
         localStorage.setItem('token', body)
-        state.token = body
-        router('/home')
+        router("/home")
     })
 
 
