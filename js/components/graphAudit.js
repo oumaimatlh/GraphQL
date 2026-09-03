@@ -15,8 +15,7 @@ export function processAuditData(transactions) {
         downMB: (totalDown / 1000000).toFixed(2),
         ratio: Number(ratio).toFixed(1)
     };
-}
-
+};
 
 
 export function generateAuditSvg(audit) {
@@ -69,4 +68,4 @@ export function generateAuditSvg(audit) {
     <line x1="30" y1="${y0}" x2="290" y2="${y0}" stroke="rgba(255, 255, 255, 0.08)" stroke-width="1.5" stroke-dasharray="4 4" />
     ${barsHtml}
 </svg>`;
-}
+};

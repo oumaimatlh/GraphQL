@@ -5,5 +5,5 @@ export function Logout(){
     logout.addEventListener('click', ()=> {
         localStorage.removeItem('token') 
         router('/')
-    })
-}
+    });
+};

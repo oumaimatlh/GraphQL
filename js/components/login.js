@@ -2,10 +2,12 @@ import { router } from "../router.js";
 import { Authentification } from "./api.js";
 
 export async function LoginHome(){
+
     if (localStorage.getItem('token')) {
         router('/home')
         return 
     }
+
     let main = document.getElementById('content');
     main.innerHTML =  `  
             <div class="left-content">
@@ -74,4 +76,4 @@ export async function LoginHome(){
     onChangeIdentifier.addEventListener('focus', ()=>error.textContent="")
     onChangePassword.addEventListener('focus', ()=>error.textContent="")
 
-}
+};

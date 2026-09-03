@@ -168,4 +168,4 @@ export async function Home(rawData) {
 `;
 
     Logout();
-}
+};

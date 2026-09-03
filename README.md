@@ -1,91 +1,228 @@
-# GraphQL
-### Différence entre API REST && GraphQL :
-* OverFetching : 
-    Le serveur envoie des données que le front ne le utilise pas, Mais via GraphQL client demande exactement les champs nécessaire 
-* Via Rest on a plusieurs routes cepandant GraphQL envoie la requete ds le corps de la requete HTTP
-    ex:
-        {
-            "query": "{ user(id: 5) { id nickname } }"
-        }
+# GraphQL Profile
 
-* Au niveau d méthode en REST : Méthodes HTTP; GraphQL: Query et Mutation
+A Single Page Application (SPA) built with **Vanilla JavaScript** that consumes a **GraphQL API** to display user profile information and statistics.
 
-### GraphQL :
-* Schema: le Schema qui décrit tous les objets disponibles
-* Type: la forme d'un Objet
-* Query: GET des données 
-* Mutation : Créer, Modifier, Supp des données 
-* Resolver : Le code qui récupere reellement les données (Back-End)
+## Features
 
-#### SCHEMA:
-    représente les objets disponibles : Champs => Type CH => données qu'on peut lire => Les opération qu'on peut effectuer .
-            Ex: 
-                type User {
-                    id: ID!
-                    nickname: String!
-                    email: String!
-                    age: Int
-                }
-                ! =>  champ Obligatoire : Not Null
+* 🔐 User authentication with JWT
+* 👤 User profile information (firstName & LastName & Login & Cohort)
+* ⚡ XP information
+* 📊 Grades and project statistics
+* 📈 Audit ratio
+* 📉 Statistics displayed with SVG graphs
+* 🧭 Client-side routing
+* 📱 Responsive design
+* 🚪 Logout functionality
 
-#### Query (Get des données )
-    DS schema 
-        type Query {
-            users: [User!]!
-        }
-            Une opération appl users qui retourne une liste d"utilisateurs 
-            query {
-                users {
-                    id
-                    nickname
-                }
-            }
-        
-        [User!]! => 
-            [User] => liste d'utilisateurs peut etre NUll
-            [User!]=> chaque élément de la liste ne peut pas être null mais la liste peut etre null => [User, null, User] (Invalid)
-            [User!]! => ni les items ni la liste doit etre Not Null
+## Technologies
 
-#### Mutation (Modifier des données)
+* HTML5
+* CSS
+* JavaScript (ES Modules)
+* GraphQL
+* SVG
+* JWT
+* Fetch API
+* Git / GitHub
 
-Type Mutation {
-    CreatePost(title: String!, content:String!): Post!
+## Project Structure
+
+```text
+GraphQL/
+│
+├── 
+│   ├── index.html
+│   │
+│   ├── Js/
+        |--components
+│   │   
+│   │      
+│   │       ├── api.js
+│   │       ├── login.js
+│   │       ├── logout.js
+│   │       └── ...
+        |--api.js
+        |--router.js
+│   │
+│   └── Css/
+│   |  └── style.css
+│   | ── README.md
+  
+```
+
+## Authentication
+
+The application uses JWT authentication.
+
+The authentication flow is:
+
+```text
+User
+  │
+  │ username/email + password
+  ▼
+Authentication API
+  │
+  │ JWT
+  ▼
+Frontend
+  │
+  │ Authorization: Bearer <JWT>
+  ▼
+GraphQL API
+  │
+  ▼
+User Data
+```
+
+The credentials are sent to the authentication API using **Basic Authentication**.
+
+After successful authentication, the server returns a JWT.
+
+The JWT is then used to authenticate GraphQL requests:
+
+```http
+Authorization: Bearer <JWT>
+```
+
+## GraphQL
+
+The application uses GraphQL to retrieve the data required for the profile.
+
+Example query:
+
+```graphql
+query {
+  user {
+    id
+    login
+    firstName
+    lastName
+    email
+  }
 }
+```
 
-Front envoie : 
-    mutation {
-    createPost(
-        title: "Apprendre GraphQL"
-        content: "Je commence GraphQL aujourd'hui."
-    ) {
-        id
-        title
-    }
-    }
+GraphQL allows the application to request only the required fields instead of retrieving unnecessary data.
 
-    Apre la creation  dpost le serveur renvoie id et title 
-        ...
+## Statistics
 
-#### Resolver (Back-End):
-    Schema GraphQL lié au resolver
-    
+The profile contains several statistics generated from the data returned by the GraphQL API.
+
+The project uses **SVG** to create the graphs without relying on external chart libraries.
+
+Examples:
+
+* XP progression
+* XP distribution
+* Audit ratio
+* Project statistics
 
 
-#### SPA 
-Single Page Application :
-    une seul Page HTML => js qui va changer le contenu 
-                index.html
-                   │
-                   ▼
-                 app.js
-                   │
-          ┌────────┼────────┐
-          ▼        ▼        ▼
-       /profile  /projects  /skills
-          │        │        │
-          ▼        ▼        ▼
-       render()  render()  render()
+## SPA Routing
+
+The application is a Single Page Application.
+
+Navigation is handled on the client side:
+
+```text
+/
+```
+
+The page can change its displayed content without performing a complete browser reload.
+
+## Installation
+
+Clone the repository:
+
+```bash
+git clone <repository-url>
+```
+
+Enter the project directory:
+
+```bash
+cd GraphQL
+```
+
+## Run the Project
+
+The frontend uses JavaScript modules, so it needs to be served through an HTTP server.
+
+For example:
+
+```bash
+python3 -m http.server 5500
+```
+
+Then open:
+
+```text
+http://localhost:5500
+```
+
+You can also use another static HTTP server.
+
+## Application Flow
+
+```text
+                    ┌─────────────┐
+                    │    Login    │
+                    └──────┬──────┘
+                           │
+                           ▼
+                  ┌─────────────────┐
+                  │ Authentication  │
+                  │      API        │
+                  └────────┬────────┘
+                           │
+                           │ JWT
+                           ▼
+                  ┌─────────────────┐
+                  │    Frontend     │
+                  └────────┬────────┘
+                           │
+                           │ GraphQL Query
+                           ▼
+                  ┌─────────────────┐
+                  │   GraphQL API   │
+                  └────────┬────────┘
+                           │
+                           ▼
+                ┌─────────────────────┐
+                │ User / XP / Grades  │
+                │ Audits              │
+                └──────────┬──────────┘
+                           │
+                           ▼
+                  ┌─────────────────┐
+                  │ SVG Statistics  │
+                  └─────────────────┘
+```
 
 
+## Objectives
 
-#### JWT; 
+This project demonstrates the ability to:
+
+* Consume a GraphQL API
+* Write and understand GraphQL queries
+* Implement JWT authentication
+* Work with HTTP requests and headers
+* Build a Single Page Application
+* Implement client-side routing
+* Process API data with JavaScript
+* Create SVG data visualizations
+* Build a responsive interface
+* Use Git and GitHub
+
+## Author
+
+**Oumaima Talhaoui**
+
+Full Stack Developer
+Zone01 Oujda
+
+## License
+
+This project was developed for educational purposes.

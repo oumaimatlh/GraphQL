@@ -13,8 +13,7 @@ export async function Authentification(identifier, password){
             "Authorization": `Basic ${credentials}`
         }
     });
-    console.log('login', response)
-   return response
+   return response;
 };
 
 
@@ -30,13 +29,13 @@ export async function GetData() {
                 query
             }
         )
-    })
-    data = await data.json()
-    console.log('data', data)
+    });
+    data = await data.json();
+
     if (data.errors) {
-        localStorage.removeItem('token')
-        router('/')
+        localStorage.removeItem('token');
+        router('/');
         return 
     }
-    return data 
+    return data ;
 }

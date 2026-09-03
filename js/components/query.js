@@ -43,5 +43,4 @@ export const query = `
           type
           amount
         }
-}
-`;
+}`;

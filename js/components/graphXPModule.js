@@ -16,7 +16,7 @@ export function processGraph1Data(transactions) {
     });
 
     return groupsData;
-}
+};
 
 
 export function generateSvgChart(groupsData) {
@@ -114,4 +114,4 @@ export function generateSvgChart(groupsData) {
     });
 
     return { mainSegmentsHtml, outerArcsHtml, innerLabelsHtml, calloutsHtml };
-}
+};

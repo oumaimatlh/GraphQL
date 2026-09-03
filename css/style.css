@@ -51,7 +51,6 @@ main {
     padding: 0 6vw;
 }
 
-/* Section Gauche : Content & Form */
 .left-content {
     display: flex;
     flex-direction: column;
@@ -61,7 +60,6 @@ main {
     z-index: 5;
 }
 
-/* Titre */
 .graphql-title h1 {
     margin-bottom:5%;
     font-family: 'Syne', sans-serif;
