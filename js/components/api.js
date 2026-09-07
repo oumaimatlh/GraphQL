@@ -37,5 +37,6 @@ export async function GetData() {
         router('/');
         return 
     }
+    console.log(data);
     return data ;
 }

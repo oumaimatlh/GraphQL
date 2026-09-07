@@ -80,7 +80,33 @@ main {
     color: rgba(255, 255, 255, 0.55);
     font-weight: 400;
 }
+.cohort-badge {
+    display: inline-flex; 
+    align-items: center; 
+    gap: 6px; 
+    padding: 4px 12px; 
+    background: rgba(168, 85, 247, 0.12); 
+    border: 1px solid rgba(168, 85, 247, 0.35); 
+    border-radius: 20px; 
+    font-family: 'Plus Jakarta Sans', sans-serif; 
+    font-size: 11px; 
+    font-weight: 700; 
+    color: #a855f7; 
+    letter-spacing: 0.5px; 
+    box-shadow: 0 0 12px rgba(168, 85, 247, 0.2);
+    backdrop-filter: blur(4px);
+}
 
+/* Conversion du SVG en pseudo-élément CSS */
+.cohort-badge::before {
+    content: '';
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    background-color: currentColor;
+    -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><path d='M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2'/><circle cx='9' cy='7' r='4'/><path d='M23 21v-2a4 4 0 0 0-3-3.87'/><path d='M16 3.13a4 4 0 0 1 0 7.75'/></svg>") no-repeat center / contain;
+    mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><path d='M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2'/><circle cx='9' cy='7' r='4'/><path d='M23 21v-2a4 4 0 0 0-3-3.87'/><path d='M16 3.13a4 4 0 0 1 0 7.75'/></svg>") no-repeat center / contain;
+}
 /* Carte Formulaire */
 .form-card {
     background: rgba(255, 255, 255, 0.03);
@@ -832,4 +858,105 @@ spline-viewer {
     .audit-card-v2 {
         min-height: 300px;
     }
+}
+
+/* ========================================
+   SVG
+======================================== */
+
+.modules-svg {
+    overflow: visible;
+}
+
+
+
+
+/* ========================================
+   Cercle extérieur
+======================================== */
+
+.outer-ring {
+    stroke: rgba(0, 242, 254, 0.12);
+    stroke-width: 1.5;
+    stroke-dasharray: 4 8;
+}
+
+
+/* ========================================
+   Segments générés par JavaScript
+======================================== */
+
+.modules-svg circle[filter="url(#glowNeon)"] {
+    filter:
+        drop-shadow(0 0 6px currentColor)
+        drop-shadow(0 0 12px currentColor);
+}
+
+
+/* ========================================
+   Centre
+======================================== */
+
+.center-circle {
+    fill: #090a10;
+
+    /*
+       Le gradient du bord sera créé
+       avec le pseudo-élément du conteneur.
+    */
+    stroke: #00f2fe;
+    stroke-width: 2;
+
+    filter:
+        drop-shadow(0 6px 10px rgba(0, 0, 0, 0.6));
+}
+
+
+/* ========================================
+   Texte central
+======================================== */
+
+.center-title {
+    fill: rgba(255, 255, 255, 0.45);
+
+    font-size: 10px;
+    font-weight: 700;
+
+    font-family:
+        'Plus Jakarta Sans',
+        sans-serif;
+
+    letter-spacing: 2px;
+}
+
+
+.center-xp {
+    fill: #ffffff;
+
+    font-size: 26px;
+    font-weight: 800;
+
+    font-family:
+        'Syne',
+        sans-serif;
+
+    filter:
+        drop-shadow(
+            0 0 8px
+            rgba(0, 242, 254, 0.4)
+        );
+}
+
+
+.center-total {
+    fill: #00f2fe;
+
+    font-size: 11px;
+    font-weight: 700;
+
+    font-family:
+        'Plus Jakarta Sans',
+        sans-serif;
+
+    letter-spacing: 1px;
 }

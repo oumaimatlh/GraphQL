@@ -5,7 +5,7 @@ export const query = `
             login
             firstName
             lastName
-            events (limit:1) {
+            events  (where:{ eventId:{_eq:41}}){
               cohorts {
                 labelName
               }

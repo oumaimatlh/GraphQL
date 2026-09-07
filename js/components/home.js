@@ -1,25 +1,26 @@
 import { router } from "../router.js";
 import { generateAuditSvg, processAuditData } from "./graphAudit.js";
-import { generateSvgChart, processGraph1Data } from "./graphXPModule.js";
+import { generateSvgModules, processGraph1Data } from "./graphXPModule.js";
 import { Logout } from "./logout.js";
 
-
 export async function Home(rawData) {
-
     if (!localStorage.getItem('token')) {
-        router('/')
-        return
+        router('/');
+        return;
     }
 
     const data = rawData?.data || {};
 
     const user = data.user?.[0] || { firstName: "", lastName: "", login: "" };
     const level = data.level?.[0]?.amount || 0;
-    const xPtotal = Math.round((data.XP?.aggregate?.sum?.amount || 0 )/ 1000);
+    const xPtotal = Math.round((data.XP?.aggregate?.sum?.amount || 0) / 1000);
+    if (xPtotal >= 1000) {
+        xPtotal = (xPtotal / 1000).toFixed(1) + "MB";
+    }
     const cohort = user?.events?.[0]?.cohorts?.[0]?.labelName || "No Cohort";
 
     const xpAmountModule = processGraph1Data(data.xpModule || []);
-    const chartComponents = generateSvgChart(xpAmountModule);
+    const chartComponents = generateSvgModules(xpAmountModule);
 
     const auditData = processAuditData(data.audit || []);
     const auditSvg = generateAuditSvg(auditData);
@@ -56,7 +57,7 @@ export async function Home(rawData) {
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
                     <circle cx="9" cy="7" r="4"></circle>
-                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                    <path d="M23 21v-2a4 4 0 0 1 0 7.75"></path>
                     <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
                 </svg>
                 <span>${cohort}</span>
@@ -168,4 +169,4 @@ export async function Home(rawData) {
 `;
 
     Logout();
-};
+}
