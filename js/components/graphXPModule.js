@@ -1,4 +1,3 @@
-//func Sert a calculer amount total pour chaque module , + % et angle pour dessiner SVG 
 export function processGraph1Data(modulesXP) {
     const groupsData = new Map();
     let totalVal = 0;
@@ -63,9 +62,7 @@ export function generateSvgModules(groupsData) {
     }
 
 
-    //Eviter que les callouts se perturbe
     const adjustY = (items) => {
-        //on trie les plus petit y au plus grand y
         items.sort((a, b) => a.y - b.y);
         for (let i = 1; i < items.length; i++) {
             if (items[i].y < items[i - 1].y + 28) items[i].y = items[i - 1].y + 28;

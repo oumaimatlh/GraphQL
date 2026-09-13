@@ -14,8 +14,6 @@ export async function Authentification(identifier, password){
     });
    return response;
 };
-
-
 export async function GetData() {
      let data = await fetch(API, {
         method: "POST",
@@ -36,6 +34,5 @@ export async function GetData() {
         router('/');
         return 
     }
-    console.log(data);
     return data ;
 }
