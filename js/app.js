@@ -4,5 +4,4 @@ function app(){
     let path = window.location.pathname;
     router(path);
 };
-
 app();

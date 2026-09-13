@@ -6,7 +6,6 @@ var API = "https://learn.zone01oujda.ma/api/graphql-engine/v1/graphql";
 
 export async function Authentification(identifier, password){
     let credentials = btoa(`${identifier}:${password}`);
-
     let response = await fetch(LOGIN, {
         method: "POST",
         headers: {

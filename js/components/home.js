@@ -8,15 +8,15 @@ export async function Home(rawData) {
         router('/');
         return;
     }
-
     const data = rawData?.data || {};
-
     const user = data.user?.[0] || { firstName: "", lastName: "", login: "" };
     const level = data.level?.[0]?.amount || 0;
-    const xPtotal = Math.round((data.XP?.aggregate?.sum?.amount || 0) / 1000);
+    let  xPtotal = Math.round((data.XP?.aggregate?.sum?.amount || 0 )/ 1000);
+    let  unite = "KB"
     if (xPtotal >= 1000) {
-        xPtotal = (xPtotal / 1000).toFixed(1) + "MB";
+        xPtotal = (xPtotal / 1024).toFixed(2); 
     }
+    unite = "MB"
     const cohort = user?.events?.[0]?.cohorts?.[0]?.labelName || "No Cohort";
 
     const xpAmountModule = processGraph1Data(data.xpModule || []);
@@ -108,7 +108,7 @@ export async function Home(rawData) {
                 <span class="xp-sub-title">CUMULATIVE XP</span>
                 <div class="xp-display">
                     <span class="xp-number">${xPtotal}</span>
-                    <span class="xp-unit">kB</span>
+                    <span class="xp-unit">${unite}</span>
                 </div>
             </div>
             <div class="xp-progress-wrapper">
@@ -144,7 +144,7 @@ export async function Home(rawData) {
                     <circle cx="270" cy="270" r="85" fill="#090a10" stroke="url(#coreBorderGrad)" stroke-width="2" />
                     <text x="270" y="252" fill="rgba(255, 255, 255, 0.45)" font-size="10" font-weight="700" font-family="'Plus Jakarta Sans', sans-serif" letter-spacing="2" text-anchor="middle">MODULES XP</text>
                     <text x="270" y="278" fill="#ffffff" font-size="26" font-weight="800" font-family="'Syne', sans-serif" text-anchor="middle" filter="drop-shadow(0 0 8px rgba(0,242,254,0.4))">${xPtotal}</text>
-                    <text x="270" y="296" fill="#00f2fe" font-size="11" font-weight="700" font-family="'Plus Jakarta Sans', sans-serif" letter-spacing="1" text-anchor="middle">kB TOTAL</text>
+                    <text x="270" y="296" fill="#00f2fe" font-size="11" font-weight="700" font-family="'Plus Jakarta Sans', sans-serif" letter-spacing="1" text-anchor="middle">${unite} TOTAL</text>
                 </g>
             </svg>
         </div>
