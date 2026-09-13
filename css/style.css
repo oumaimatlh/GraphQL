@@ -18,7 +18,6 @@ html, body {
     overflow-y: auto;
 }
 
-/* Arrière-plan décoratif luminescent */
 .background-glow {
     position: absolute;
     width: clamp(250px, 35vw, 450px);

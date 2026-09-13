@@ -11,7 +11,6 @@ export const query = `
               }
             }
           }
-
       level :
           transaction (where: {_and:[ {eventId: {_eq:41}} {type:{_eq:"level"}}] }  limit:1 order_by:{amount:desc}) {
               amount

@@ -14,7 +14,7 @@ export async function Home(rawData) {
     let  xPtotal = Math.round((data.XP?.aggregate?.sum?.amount || 0 )/ 1000);
     let  unite = "KB"
     if (xPtotal >= 1000) {
-        xPtotal = (xPtotal / 1024).toFixed(2);
+        xPtotal = (xPtotal / 1000).toFixed(2);
           unite = "MB"
     }
     const cohort = user?.events?.[0]?.cohorts?.[0]?.labelName || "No Cohort";

@@ -24,9 +24,7 @@ A Single Page Application (SPA) built with **Vanilla JavaScript** that consumes 
 * JWT
 * Fetch API
 * Git / GitHub
-
 ## Project Structure
-
 ```text
 GraphQL/
 │
@@ -154,9 +152,9 @@ For example:
 ```bash
 python3 -m http.server 5500
 ```
+or Live Server 
 
 Then open:
-
 ```text
 http://localhost:5500
 ```
@@ -215,6 +213,9 @@ This project demonstrates the ability to:
 * Create SVG data visualizations
 * Build a responsive interface
 * Use Git and GitHub
+
+
+## Hosting : 
 
 ## Author
 
