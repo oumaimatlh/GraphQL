@@ -3,7 +3,7 @@ export function processGraph1Data(modulesXP) {
     let totalVal = 0;
 
     modulesXP.forEach((i) => {
-        const key = i.object?.attrs || "others";
+        const key = i.object?.attrs?.toLowerCase() || "others";
         const amount = i.amount || 0;
         groupsData.set(key, (groupsData.get(key) || 0) + amount);
         totalVal += amount;

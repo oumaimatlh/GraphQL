@@ -698,10 +698,12 @@ spline-viewer {
     object-fit: contain;
 }
 
-
+/* =========================================
+   MEDIA QUERY 1024px (Éléments agrandis)
+========================================= */
 @media (max-width: 1024px) {
     main {
-        padding: 16px 12px;
+        padding: 20px 16px;
     }
 
     .container {
@@ -718,13 +720,15 @@ spline-viewer {
         height: auto;
         min-height: auto;
         grid-template-columns: 1fr;
-        gap: 14px;
+        gap: 18px;
+        width: 100%;
     }
 
     .header {
         grid-column: 1 / -1;
-         margin: 0 auto;
-        width: 75%;
+        margin: 0 auto;
+        width: 92%; /* Passage de 75% à 92% pour occuper plus d'espace */
+        padding: 14px 20px;
     }
 
     .side-column,
@@ -732,27 +736,26 @@ spline-viewer {
     .center-column {
         height: auto;
         margin: 0 auto;
-        width: 75%;
-        max-width: 90%;
+        width: 92%; /* Élargissement des conteneurs d'éléments */
+        max-width: 100%;
         min-height: auto;
-        gap: 14px;
+        gap: 18px;
     }
 
     .side-column .card,
     .side-column-right .card {
         flex: none;
-        min-height: 160px;
+        min-height: 180px; /* Cartes latérales légèrement rehaussées */
     }
 
     .center-column {
-        min-height: 350px;
+        min-height: 400px; /* Espace central élargi et rehaussé */
     }
 
     .audit-card-v2 {
-        min-height: 300px;
+        min-height: 340px; /* Visualisation des graphiques agrandie */
     }
 }
-
 /* Mobiles (Moins de 640px) */
 @media (max-width: 640px) {
    
@@ -787,9 +790,6 @@ spline-viewer {
     }
 }
 
-/* ========================================
-   SVG
-======================================== */
 
 .modules-svg {
     overflow: visible;
@@ -798,10 +798,6 @@ spline-viewer {
 
 
 
-/* ========================================
-   Cercle extérieur
-======================================== */
-
 .outer-ring {
     stroke: rgba(0, 242, 254, 0.12);
     stroke-width: 1.5;
@@ -809,9 +805,6 @@ spline-viewer {
 }
 
 
-/* ========================================
-   Segments générés par JavaScript
-======================================== */
 
 .modules-svg circle[filter="url(#glowNeon)"] {
     filter:
@@ -819,10 +812,6 @@ spline-viewer {
         drop-shadow(0 0 12px currentColor);
 }
 
-
-/* ========================================
-   Centre
-======================================== */
 
 .center-circle {
     fill: #090a10;
@@ -838,10 +827,6 @@ spline-viewer {
         drop-shadow(0 6px 10px rgba(0, 0, 0, 0.6));
 }
 
-
-/* ========================================
-   Texte central
-======================================== */
 
 .center-title {
     fill: rgba(255, 255, 255, 0.45);
