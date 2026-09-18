@@ -58,8 +58,17 @@ export async function LoginHome(){
             return
         }
 
-        const res =await  Authentification(identifier, password); 
-        const body = await res.json()
+        let body;
+        try {
+            const res = await Authentification(identifier, password);
+            if (!res) throw new Error("network");
+            body = await res.json();
+        } catch {
+            error.textContent = "Unable to reach the server. Please try again.";
+            error.style.color = "red";
+            return;
+        }
+
         if (body.error) {
             error.textContent = body.error
             error.style.color = "red"
