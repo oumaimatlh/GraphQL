@@ -24,8 +24,9 @@ export function generateAuditSvg(audit) {
     const downMB = parseFloat(audit?.downMB) || 0;
     const ratio = parseFloat(audit?.ratio) || 0;
 
-    const ratioColor = ratio >= 1.0 ? "#38ef7d" : "#ff0080";
-    const statusText = ratio >= 1.0 ? "OPTIMAL" : "CRITICAL";
+    const isOptimal = ratio >= 1.0;
+    const ratioColor = isOptimal ? "#38ef7d" : "#ff0080";
+    const statusText = isOptimal ? "OPTIMAL" : "CRITICAL";
 
     const barsData = [
         { label: "DONE", subLabel: "UPLOAD", valText: `${upMB} MB`, rawVal: upMB, front: "#00f2fe", side: "#00778a", top: "#80f9ff", glow: "#00f2fe" },

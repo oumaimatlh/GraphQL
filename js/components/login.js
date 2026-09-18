@@ -51,7 +51,8 @@ export async function LoginHome(){
         const identifier = data.get("identifier") ; 
         const password = data.get("password") ;
 
-        if (!identifier.trim() || !password.trim()) {
+        const hasEmptyFields = !identifier.trim() || !password.trim();
+        if (hasEmptyFields) {
             error.textContent = "All fields are required."
             error.style.color = "red"
             return

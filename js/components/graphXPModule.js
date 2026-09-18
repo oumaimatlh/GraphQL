@@ -49,7 +49,9 @@ export function generateSvgModules(groupsData) {
 
         mainSegmentsHtml += `<circle cx="${cx}" cy="${cy}" r="${radius}" fill="none" stroke="${color}" stroke-width="28" stroke-linecap="round" stroke-dasharray="${dash} ${circumference}" transform="rotate(${currentAngle} ${cx} ${cy})" filter="url(#glowNeon)" opacity="0.95"><title>${name}: ${pct}% (${kb} kB)</title></circle>`;
         outerArcsHtml += `<circle cx="${cx}" cy="${cy}" r="${outerRadius}" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round" stroke-dasharray="${outerDash} ${outerCircumference}" transform="rotate(${currentAngle} ${cx} ${cy})" opacity="0.5"/>`;
-        if (data.percentage >= 5) {// cette condition permet d 'afficher le pourcentage au milieu d angle pour les modules qui ont un prcnt plus de 5 %
+        
+        const isLargeEnoughToLabel = data.percentage >= 5; 
+        if (isLargeEnoughToLabel) {
             const [x, y] = getPoint(radius, midAngle);
             innerLabelsHtml += `<text x="${x}" y="${y}" fill="#ffffff" font-size="11" font-weight="800" font-family="'Syne', sans-serif" text-anchor="middle" dominant-baseline="central" style="pointer-events: none; text-shadow: 0 2px 4px rgba(0,0,0,0.9);">${pct}%</text>`;
         }
@@ -63,14 +65,17 @@ export function generateSvgModules(groupsData) {
 
 
     const adjustY = (items) => {
+        const minLabelGap = 28;
+        const maxLabelY = 510;
+
         items.sort((a, b) => a.y - b.y);
         for (let i = 1; i < items.length; i++) {
-            if (items[i].y < items[i - 1].y + 28) items[i].y = items[i - 1].y + 28;
+            if (items[i].y < items[i - 1].y + minLabelGap) items[i].y = items[i - 1].y + minLabelGap;
         }
-        if (items.length && items[items.length - 1].y > 510) {
-            items[items.length - 1].y = 510;
+        if (items.length && items[items.length - 1].y > maxLabelY) {
+            items[items.length - 1].y = maxLabelY;
             for (let i = items.length - 2; i >= 0; i--) {
-                if (items[i].y > items[i + 1].y - 28) items[i].y = items[i + 1].y - 28;
+                if (items[i].y > items[i + 1].y - minLabelGap) items[i].y = items[i + 1].y - minLabelGap;
             }
         }
     };
