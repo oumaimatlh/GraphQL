@@ -37,7 +37,7 @@ export function generateSvgModules(groupsData) {
     const calloutList = [];
     for (const [moduleName, data] of groupsData) {
         if (data.percentage <= 0) continue;
-        const name = moduleName?.trim() && moduleName !== "undefined" ? moduleName : "others";
+        const name = moduleName;
         const color = colors[colorIndex++ % colors.length];
         const midAngle = currentAngle + data.angle / 2; //Afin de deplacer le nom + prcnt en milieu d angle
         const pct = Math.round(data.percentage);
