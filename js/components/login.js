@@ -8,7 +8,7 @@ export async function LoginHome(){
         return 
     }
 
-    let main = document.getElementById('content');
+    const main = document.getElementById('content');
     main.innerHTML =  `  
             <div class="left-content">
                 <div class="graphql-title">
@@ -39,17 +39,17 @@ export async function LoginHome(){
 
 
      
-    let form = document.getElementById("form");
-    let error = document.getElementById('error-message')
+    const form = document.getElementById("form");
+    const error = document.getElementById('error-message')
 
 
     form.addEventListener("submit",async (event)=>{
         event.preventDefault();
         
-        let data = new  FormData(form)
+        const data = new  FormData(form)
 
-        let identifier = data.get("identifier") ; 
-        let password = data.get("password") ;
+        const identifier = data.get("identifier") ; 
+        const password = data.get("password") ;
 
         if (!identifier.trim() || !password.trim()) {
             error.textContent = "All fields are required."
@@ -57,8 +57,8 @@ export async function LoginHome(){
             return
         }
 
-        let res =await  Authentification(identifier, password); 
-        let body = await res.json()
+        const res =await  Authentification(identifier, password); 
+        const body = await res.json()
         if (body.error) {
             error.textContent = body.error
             error.style.color = "red"

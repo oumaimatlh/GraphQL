@@ -1,7 +1,7 @@
 import { router } from "../router.js";
 
 export function Logout(){
-    let logout = document.getElementById('logoutBtn')
+    const logout = document.getElementById('logoutBtn')
     logout.addEventListener('click', ()=> {
         localStorage.removeItem('token') 
         router('/')
