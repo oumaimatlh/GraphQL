@@ -1,15 +1,14 @@
 import { router } from "../router.js";
 import { Authentification } from "./api.js";
 
-export async function LoginHome(){
+export async function LoginHome() {
+  if (localStorage.getItem("token")) {
+    router("/home");
+    return;
+  }
 
-    if (localStorage.getItem('token')) {
-        router('/home')
-        return 
-    }
-
-    const main = document.getElementById('content');
-    main.innerHTML =  `  
+  const main = document.getElementById("content");
+  main.innerHTML = `  
             <div class="left-content">
                 <div class="graphql-title">
                     <h1>GraphQL</h1>
@@ -37,53 +36,48 @@ export async function LoginHome(){
                 <div class="hide-spline-logo"></div>
             </div>`;
 
+  const form = document.getElementById("form");
+  const error = document.getElementById("error-message");
 
-     
-    const form = document.getElementById("form");
-    const error = document.getElementById('error-message')
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
 
+    const data = new FormData(form);
 
-    form.addEventListener("submit",async (event)=>{
-        event.preventDefault();
-        
-        const data = new  FormData(form)
+    const identifier = data.get("identifier");
+    const password = data.get("password");
 
-        const identifier = data.get("identifier") ; 
-        const password = data.get("password") ;
+    const hasEmptyFields = !identifier.trim() || !password.trim();
+    if (hasEmptyFields) {
+      error.textContent = "All fields are required.";
+      error.style.color = "red";
+      return;
+    }
 
-        const hasEmptyFields = !identifier.trim() || !password.trim();
-        if (hasEmptyFields) {
-            error.textContent = "All fields are required."
-            error.style.color = "red"
-            return
-        }
+    let body;
+    try {
+      const res = await Authentification(identifier, password);
+      if (!res) throw new Error("network");
+      body = await res.json();
+    } catch {
+      error.textContent = "Unable to reach the server. Please try again.";
+      error.style.color = "red";
+      return;
+    }
 
-        let body;
-        try {
-            const res = await Authentification(identifier, password);
-            if (!res) throw new Error("network");
-            body = await res.json();
-        } catch {
-            error.textContent = "Unable to reach the server. Please try again.";
-            error.style.color = "red";
-            return;
-        }
+    if (body.error) {
+      error.textContent = body.error;
+      error.style.color = "red";
+      return;
+    }
 
-        if (body.error) {
-            error.textContent = body.error
-            error.style.color = "red"
-            return
-        }
-        
-        localStorage.setItem('token', body)
-        router("/home")
-    })
+    localStorage.setItem("token", body);
+    router("/home");
+  });
 
+  const onChangeIdentifier = document.getElementById("identifier");
+  const onChangePassword = document.getElementById("password");
 
-    const onChangeIdentifier = document.getElementById('identifier')
-    const onChangePassword = document.getElementById('password')
-
-    onChangeIdentifier.addEventListener('focus', ()=>error.textContent="")
-    onChangePassword.addEventListener('focus', ()=>error.textContent="")
-
-};
+  onChangeIdentifier.addEventListener("focus", () => (error.textContent = ""));
+  onChangePassword.addEventListener("focus", () => (error.textContent = ""));
+}

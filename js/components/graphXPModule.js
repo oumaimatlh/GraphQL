@@ -1,97 +1,126 @@
 export function processGraph1Data(modulesXP) {
-    const groupsData = new Map();
-    let totalVal = 0;
+  const groupsData = new Map();
+  let totalVal = 0;
 
-    modulesXP.forEach((i) => {
-        const key = i.object?.attrs?.toLowerCase() || "others";
-        const amount = i.amount || 0;
-        groupsData.set(key, (groupsData.get(key) || 0) + amount);
-        totalVal += amount;
-    
-    });
+  modulesXP.forEach((i) => {
+    const key = i.object?.attrs?.toLowerCase() || "others";
+    const amount = i.amount || 0;
+    groupsData.set(key, (groupsData.get(key) || 0) + amount);
+    totalVal += amount;
+  });
 
-    groupsData.forEach((amount, mod) => {
-        const percentage = (amount / totalVal) * 100 
-        const angle = (amount / totalVal) * 360 
-        groupsData.set(mod, { amount, percentage, angle });
-    });
-    return groupsData;
-};
+  groupsData.forEach((amount, mod) => {
+    const percentage = (amount / totalVal) * 100;
+    const angle = (amount / totalVal) * 360;
+    groupsData.set(mod, { amount, percentage, angle });
+  });
+  return groupsData;
+}
 
 export function generateSvgModules(groupsData) {
-    const cx = 270, cy = 270, radius = 135, outerRadius = 170;
-    const circumference = 2 * Math.PI * radius;
-    const outerCircumference = 2 * Math.PI * outerRadius;
+  const cx = 270,
+    cy = 270,
+    radius = 135,
+    outerRadius = 170;
+  const circumference = 2 * Math.PI * radius;
+  const outerCircumference = 2 * Math.PI * outerRadius;
 
-    const colors = ['#00f2fe', '#ff0080', '#a855f7', '#38ef7d', '#ffb703', '#3b82f6', '#ec4899', '#10b981'];
+  const colors = [
+    "#00f2fe",
+    "#ff0080",
+    "#a855f7",
+    "#38ef7d",
+    "#ffb703",
+    "#3b82f6",
+    "#ec4899",
+    "#10b981",
+  ];
 
-    const getPoint = (r, deg) => {
-        const rad = (deg * Math.PI) / 180;
-        return [cx + r * Math.cos(rad), cy + r * Math.sin(rad)];
-    };
+  const getPoint = (r, deg) => {
+    const rad = (deg * Math.PI) / 180;
+    return [cx + r * Math.cos(rad), cy + r * Math.sin(rad)];
+  };
 
-    let currentAngle = -90, colorIndex = 0;
-    let mainSegmentsHtml = '', outerArcsHtml = '', innerLabelsHtml = '';
-    const calloutList = [];
-    for (const [moduleName, data] of groupsData) {
-        if (data.percentage <= 0) continue;
-        const name = moduleName;
-        const color = colors[colorIndex++ % colors.length];
-        const midAngle = currentAngle + data.angle / 2;
-        const pct = Math.round(data.percentage);
-        const kb = Math.round(data.amount / 1000);
-        const gap = groupsData.size > 1 ? 6 : 0;
-        // Math.max avoids a negative dash length when percentage is small enough that subtracting gap would go below 0
-        const dash = Math.max(0, (data.percentage / 100) * circumference - gap);
-        const outerDash = Math.max(0, (data.percentage / 100) * outerCircumference - 10);
+  let currentAngle = -90,
+    colorIndex = 0;
+  let mainSegmentsHtml = "",
+    outerArcsHtml = "",
+    innerLabelsHtml = "";
+  const calloutList = [];
+  for (const [moduleName, data] of groupsData) {
+    if (data.percentage <= 0) continue;
+    const name = moduleName;
+    const color = colors[colorIndex++ % colors.length];
+    const midAngle = currentAngle + data.angle / 2;
+    const pct = Math.round(data.percentage);
+    const kb = Math.round(data.amount / 1000);
+    const gap = groupsData.size > 1 ? 6 : 0;
+    // Math.max avoids a negative dash length when percentage is small enough that subtracting gap would go below 0
+    const dash = Math.max(0, (data.percentage / 100) * circumference - gap);
+    const outerDash = Math.max(
+      0,
+      (data.percentage / 100) * outerCircumference - 10,
+    );
 
+    mainSegmentsHtml += `<circle cx="${cx}" cy="${cy}" r="${radius}" fill="none" stroke="${color}" stroke-width="28" stroke-linecap="round" stroke-dasharray="${dash} ${circumference}" transform="rotate(${currentAngle} ${cx} ${cy})" filter="url(#glowNeon)" opacity="0.95"><title>${name}: ${pct}% (${kb} kB)</title></circle>`;
+    outerArcsHtml += `<circle cx="${cx}" cy="${cy}" r="${outerRadius}" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round" stroke-dasharray="${outerDash} ${outerCircumference}" transform="rotate(${currentAngle} ${cx} ${cy})" opacity="0.5"/>`;
 
-        mainSegmentsHtml += `<circle cx="${cx}" cy="${cy}" r="${radius}" fill="none" stroke="${color}" stroke-width="28" stroke-linecap="round" stroke-dasharray="${dash} ${circumference}" transform="rotate(${currentAngle} ${cx} ${cy})" filter="url(#glowNeon)" opacity="0.95"><title>${name}: ${pct}% (${kb} kB)</title></circle>`;
-        outerArcsHtml += `<circle cx="${cx}" cy="${cy}" r="${outerRadius}" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round" stroke-dasharray="${outerDash} ${outerCircumference}" transform="rotate(${currentAngle} ${cx} ${cy})" opacity="0.5"/>`;
-        
-        const isLargeEnoughToLabel = data.percentage >= 5; 
-        if (isLargeEnoughToLabel) {
-            const [x, y] = getPoint(radius, midAngle);
-            innerLabelsHtml += `<text x="${x}" y="${y}" fill="#ffffff" font-size="11" font-weight="800" font-family="'Syne', sans-serif" text-anchor="middle" dominant-baseline="central" style="pointer-events: none; text-shadow: 0 2px 4px rgba(0,0,0,0.9);">${pct}%</text>`;
-        }
-
-        const [p0X, p0Y] = getPoint(radius + 16, midAngle);
-        const [p1X, p1Y] = getPoint(outerRadius + 8, midAngle);
-
-        calloutList.push({ name, color, pct, kb, p0X, p0Y, p1X, y: p1Y, isRight: p1X >= cx });
-        currentAngle += data.angle;
+    const isLargeEnoughToLabel = data.percentage >= 5;
+    if (isLargeEnoughToLabel) {
+      const [x, y] = getPoint(radius, midAngle);
+      innerLabelsHtml += `<text x="${x}" y="${y}" fill="#ffffff" font-size="11" font-weight="800" font-family="'Syne', sans-serif" text-anchor="middle" dominant-baseline="central" style="pointer-events: none; text-shadow: 0 2px 4px rgba(0,0,0,0.9);">${pct}%</text>`;
     }
 
+    const [p0X, p0Y] = getPoint(radius + 16, midAngle);
+    const [p1X, p1Y] = getPoint(outerRadius + 8, midAngle);
 
-    const adjustY = (items) => {
-        const minLabelGap = 28;
-        const maxLabelY = 510;
+    calloutList.push({
+      name,
+      color,
+      pct,
+      kb,
+      p0X,
+      p0Y,
+      p1X,
+      y: p1Y,
+      isRight: p1X >= cx,
+    });
+    currentAngle += data.angle;
+  }
 
-        items.sort((a, b) => a.y - b.y);
-        for (let i = 1; i < items.length; i++) {
-            if (items[i].y < items[i - 1].y + minLabelGap) items[i].y = items[i - 1].y + minLabelGap;
-        }
-        if (items.length && items[items.length - 1].y > maxLabelY) {
-            items[items.length - 1].y = maxLabelY;
-            for (let i = items.length - 2; i >= 0; i--) {
-                if (items[i].y > items[i + 1].y - minLabelGap) items[i].y = items[i + 1].y - minLabelGap;
-            }
-        }
-    };
-    adjustY(calloutList.filter(c => c.isRight));
-    adjustY(calloutList.filter(c => !c.isRight));
-    const calloutsHtml = calloutList.map(c => {
-        const dir = c.isRight ? 1 : -1;
-        const p2X = c.p1X + dir * 20;
-        const badgeX = p2X + dir * 6;
-        const align = c.isRight ? 'start' : 'end';
-        return `<g>
+  const adjustY = (items) => {
+    const minLabelGap = 28;
+    const maxLabelY = 510;
+
+    items.sort((a, b) => a.y - b.y);
+    for (let i = 1; i < items.length; i++) {
+      if (items[i].y < items[i - 1].y + minLabelGap)
+        items[i].y = items[i - 1].y + minLabelGap;
+    }
+    if (items.length && items[items.length - 1].y > maxLabelY) {
+      items[items.length - 1].y = maxLabelY;
+      for (let i = items.length - 2; i >= 0; i--) {
+        if (items[i].y > items[i + 1].y - minLabelGap)
+          items[i].y = items[i + 1].y - minLabelGap;
+      }
+    }
+  };
+  adjustY(calloutList.filter((c) => c.isRight));
+  adjustY(calloutList.filter((c) => !c.isRight));
+  const calloutsHtml = calloutList
+    .map((c) => {
+      const dir = c.isRight ? 1 : -1;
+      const p2X = c.p1X + dir * 20;
+      const badgeX = p2X + dir * 6;
+      const align = c.isRight ? "start" : "end";
+      return `<g>
                 <circle cx="${c.p0X}" cy="${c.p0Y}" r="2" fill="${c.color}" filter="url(#glowNeon)"/>
                 <path d="M ${c.p0X} ${c.p0Y} L ${c.p1X} ${c.y} L ${p2X} ${c.y}" fill="none" stroke="${c.color}" stroke-width="1.2" opacity="0.75"/>
                 <circle cx="${p2X}" cy="${c.y}" r="2.5" fill="${c.color}" />
                 <text x="${badgeX}" y="${c.y - 4}" fill="#ffffff" font-size="11" font-weight="700" font-family="'Syne', sans-serif" text-anchor="${align}">${c.name}</text>
                 <text x="${badgeX}" y="${c.y + 10}" fill="${c.color}" font-size="10" font-weight="600" font-family="'Plus Jakarta Sans', sans-serif" text-anchor="${align}">${c.kb} kB (${c.pct}%)</text>
                 </g>`;
-    }).join('');
-    return { mainSegmentsHtml, outerArcsHtml, innerLabelsHtml, calloutsHtml };
+    })
+    .join("");
+  return { mainSegmentsHtml, outerArcsHtml, innerLabelsHtml, calloutsHtml };
 }

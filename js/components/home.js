@@ -4,29 +4,29 @@ import { generateSvgModules, processGraph1Data } from "./graphXPModule.js";
 import { Logout } from "./logout.js";
 
 export async function Home(rawData) {
-    if (!localStorage.getItem('token')) {
-        router('/');
-        return;
-    }
-    const data = rawData?.data || {};
-    const user = data.user?.[0] || { firstName: "", lastName: "", login: "" };
-    const level = data.level?.[0]?.amount || 0;
-    let  xpTotal = Math.round((data.XP?.aggregate?.sum?.amount || 0 )/ 1000);
-    let  unit = "KB"
-    if (xpTotal >= 1000) {
-        xpTotal = (xpTotal / 1000).toFixed(2);
-          unit = "MB"
-    }
-    const cohort = user?.events?.[0]?.cohorts?.[0]?.labelName || "No Cohort";
+  if (!localStorage.getItem("token")) {
+    router("/");
+    return;
+  }
+  const data = rawData?.data || {};
+  const user = data.user?.[0] || { firstName: "", lastName: "", login: "" };
+  const level = data.level?.[0]?.amount || 0;
+  let xpTotal = Math.round((data.XP?.aggregate?.sum?.amount || 0) / 1000);
+  let unit = "KB";
+  if (xpTotal >= 1000) {
+    xpTotal = (xpTotal / 1000).toFixed(2);
+    unit = "MB";
+  }
+  const cohort = user?.events?.[0]?.cohorts?.[0]?.labelName || "No Cohort";
 
-    const xpAmountModule = processGraph1Data(data.xpModule || []);
-    const chartComponents = generateSvgModules(xpAmountModule);
+  const xpAmountModule = processGraph1Data(data.xpModule || []);
+  const chartComponents = generateSvgModules(xpAmountModule);
 
-    const auditData = processAuditData(data.audit || []);
-    const auditSvg = generateAuditSvg(auditData);
-    const main = document.getElementById('content');
+  const auditData = processAuditData(data.audit || []);
+  const auditSvg = generateAuditSvg(auditData);
+  const main = document.getElementById("content");
 
-    main.innerHTML = `
+  main.innerHTML = `
 <div class="dashboard">
     <header class="header">
         <div class="header-profile">
@@ -140,5 +140,5 @@ export async function Home(rawData) {
     </aside>
 </div>
 `;
-    Logout();
+  Logout();
 }

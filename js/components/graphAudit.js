@@ -1,46 +1,70 @@
-
 export function processAuditData(transactions) {
-    let totalUp = 0, totalDown = 0, ratio = 0;
+  let totalUp = 0,
+    totalDown = 0,
+    ratio = 0;
 
-    transactions.forEach((t) => {
-        if (t.type === 'up') totalUp += t.amount;
-        if (t.type === 'down') totalDown += t.amount;
-        if (t.user?.auditRatio !== undefined) ratio = t.user.auditRatio;
-    });
+  transactions.forEach((t) => {
+    if (t.type === "up") totalUp += t.amount;
+    if (t.type === "down") totalDown += t.amount;
+    if (t.user?.auditRatio !== undefined) ratio = t.user.auditRatio;
+  });
 
-    if (!ratio && totalDown > 0) ratio = totalUp / totalDown;
+  if (!ratio && totalDown > 0) ratio = totalUp / totalDown;
 
-    return {
-        upMB: (totalUp / 1000000).toFixed(2),
-        downMB: (totalDown / 1000000).toFixed(2),
-        ratio: Number(ratio).toFixed(1)
-    };
+  return {
+    upMB: (totalUp / 1000000).toFixed(2),
+    downMB: (totalDown / 1000000).toFixed(2),
+    ratio: Number(ratio).toFixed(1),
+  };
 }
 
-
-
 export function generateAuditSvg(audit) {
-    const upMB = parseFloat(audit?.upMB) || 0;
-    const downMB = parseFloat(audit?.downMB) || 0;
-    const ratio = parseFloat(audit?.ratio) || 0;
+  const upMB = parseFloat(audit?.upMB) || 0;
+  const downMB = parseFloat(audit?.downMB) || 0;
+  const ratio = parseFloat(audit?.ratio) || 0;
 
-    const isOptimal = ratio >= 1.0;
-    const ratioColor = isOptimal ? "#38ef7d" : "#ff0080";
-    const statusText = isOptimal ? "OPTIMAL" : "CRITICAL";
+  const isOptimal = ratio >= 1.0;
+  const ratioColor = isOptimal ? "#38ef7d" : "#ff0080";
+  const statusText = isOptimal ? "OPTIMAL" : "CRITICAL";
 
-    const barsData = [
-        { label: "DONE", subLabel: "UPLOAD", valText: `${upMB} MB`, rawVal: upMB, front: "#00f2fe", side: "#00778a", top: "#80f9ff", glow: "#00f2fe" },
-        { label: "RECEIVED", subLabel: "DOWNLOAD", valText: `${downMB} MB`, rawVal: downMB, front: "#ffb703", side: "#c79004", top: "#f6c447", glow: "#ffb703" }
-    ];
+  const barsData = [
+    {
+      label: "DONE",
+      subLabel: "UPLOAD",
+      valText: `${upMB} MB`,
+      rawVal: upMB,
+      front: "#00f2fe",
+      side: "#00778a",
+      top: "#80f9ff",
+      glow: "#00f2fe",
+    },
+    {
+      label: "RECEIVED",
+      subLabel: "DOWNLOAD",
+      valText: `${downMB} MB`,
+      rawVal: downMB,
+      front: "#ffb703",
+      side: "#c79004",
+      top: "#f6c447",
+      glow: "#ffb703",
+    },
+  ];
 
-    const maxVal = Math.max(upMB, downMB, 1);
-    const maxHeight = 105, y0 = 245, barWidth = 48, dx = 14, dy = 12, startX = 75, gap = 70;
+  const maxVal = Math.max(upMB, downMB, 1);
+  const maxHeight = 105,
+    y0 = 245,
+    barWidth = 48,
+    dx = 14,
+    dy = 12,
+    startX = 75,
+    gap = 70;
 
-    const barsHtml = barsData.map((bar, index) => {
-        const h = Math.max(22, (bar.rawVal / maxVal) * maxHeight);
-        const x = startX + index * (barWidth + gap);
+  const barsHtml = barsData
+    .map((bar, index) => {
+      const h = Math.max(22, (bar.rawVal / maxVal) * maxHeight);
+      const x = startX + index * (barWidth + gap);
 
-        return `
+      return `
             <g>
                 <ellipse cx="${x + barWidth / 2 + dx / 2}" cy="${y0 + 2}" rx="${barWidth / 1.3}" ry="6" fill="${bar.glow}" opacity="0.25" filter="blur(6px)" />
                 <path d="M ${x} ${y0 - h} L ${x + barWidth} ${y0 - h} L ${x + barWidth + dx} ${y0 - h - dy} L ${x + dx} ${y0 - h - dy} Z" fill="${bar.top}" opacity="0.9" />
@@ -50,9 +74,10 @@ export function generateAuditSvg(audit) {
                 <text x="${x + barWidth / 2}" y="${y0 + 25}" fill="#ffffff" font-size="12" font-weight="800" font-family="'Plus Jakarta Sans', sans-serif" text-anchor="middle" letter-spacing="0.5">${bar.label}</text>
                 <text x="${x + barWidth / 2}" y="${y0 + 39}" fill="rgba(255, 255, 255, 0.45)" font-size="9" font-weight="700" font-family="'Plus Jakarta Sans', sans-serif" text-anchor="middle" letter-spacing="1">${bar.subLabel}</text>
             </g>`;
-    }).join('');
+    })
+    .join("");
 
-    return `
+  return `
 <svg width="100%" height="100%" viewBox="0 0 320 310" preserveAspectRatio="xMidYMid meet">
     <defs>
         <filter id="ratioGlow" x="-40%" y="-40%" width="180%" height="180%">
