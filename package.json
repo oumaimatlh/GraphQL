@@ -1,0 +1,23 @@
+{
+  "name": "graphql",
+  "version": "1.0.0",
+  "description": "A Single Page Application (SPA) built with **Vanilla JavaScript** that consumes a **GraphQL API** to display user profile information and statistics.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "format": "prettier --write ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/oumaimatlh/GraphQL.git"
+  },
+  "keywords": [],
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/oumaimatlh/GraphQL/issues"
+  },
+  "homepage": "https://github.com/oumaimatlh/GraphQL#readme",
+  "devDependencies": {
+    "prettier": "^3.9.8"
+  }
+}
