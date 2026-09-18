@@ -15,7 +15,6 @@ export function processGraph1Data(modulesXP) {
         const angle = (amount / totalVal) * 360 
         groupsData.set(mod, { amount, percentage, angle });
     });
-    console.log(groupsData)
     return groupsData;
 };
 
@@ -27,7 +26,6 @@ export function generateSvgModules(groupsData) {
     const colors = ['#00f2fe', '#ff0080', '#a855f7', '#38ef7d', '#ffb703', '#3b82f6', '#ec4899', '#10b981'];
 
     const getPoint = (r, deg) => {
-        // cette func sert a donner x, y position exact du point afin de dessiner ds le svg
         const rad = (deg * Math.PI) / 180;
         return [cx + r * Math.cos(rad), cy + r * Math.sin(rad)];
     };
@@ -39,12 +37,13 @@ export function generateSvgModules(groupsData) {
         if (data.percentage <= 0) continue;
         const name = moduleName;
         const color = colors[colorIndex++ % colors.length];
-        const midAngle = currentAngle + data.angle / 2; //Afin de deplacer le nom + prcnt en milieu d angle
+        const midAngle = currentAngle + data.angle / 2;
         const pct = Math.round(data.percentage);
-        const kb = Math.round(data.amount / 1000); // round pour eviter le decimal ect
-        const gap = groupsData.size > 1 ? 6 : 0; //gap c est l espace qui est entre les segments du graph et paths ect
-        const dash = Math.max(0, (data.percentage / 100) * circumference - gap); // pour chaque module on calculer la longueur du module qui represente le pourcentage de l angle total du graphb
-        const outerDash = Math.max(0, (data.percentage / 100) * outerCircumference - 10); //Math.Max pour eviter les valeurs negatives si le pourcentage est trop petit
+        const kb = Math.round(data.amount / 1000);
+        const gap = groupsData.size > 1 ? 6 : 0;
+        // Math.max avoids a negative dash length when percentage is small enough that subtracting gap would go below 0
+        const dash = Math.max(0, (data.percentage / 100) * circumference - gap);
+        const outerDash = Math.max(0, (data.percentage / 100) * outerCircumference - 10);
 
 
         mainSegmentsHtml += `<circle cx="${cx}" cy="${cy}" r="${radius}" fill="none" stroke="${color}" stroke-width="28" stroke-linecap="round" stroke-dasharray="${dash} ${circumference}" transform="rotate(${currentAngle} ${cx} ${cy})" filter="url(#glowNeon)" opacity="0.95"><title>${name}: ${pct}% (${kb} kB)</title></circle>`;
@@ -84,7 +83,7 @@ export function generateSvgModules(groupsData) {
     const calloutsHtml = calloutList.map(c => {
         const dir = c.isRight ? 1 : -1;
         const p2X = c.p1X + dir * 20;
-        const badgeX = p2X + dir * 6; // name of module
+        const badgeX = p2X + dir * 6;
         const align = c.isRight ? 'start' : 'end';
         return `<g>
                 <circle cx="${c.p0X}" cy="${c.p0Y}" r="2" fill="${c.color}" filter="url(#glowNeon)"/>
